@@ -11,9 +11,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PedestalBlockEntity extends BlockEntity implements ImplementedInventory {
@@ -27,8 +27,10 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
     public void drops() {
         if (world != null) {
             for (ItemStack stack : items) {
-                ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-                world.spawnEntity(itemEntity);
+                if (!stack.isEmpty()) {
+                    ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    world.spawnEntity(itemEntity);
+                }
             }
         }
     }
@@ -59,6 +61,13 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
         return BlockEntityUpdateS2CPacket.create(this);
     }
 
+    public static void tick(World world, BlockPos pos, BlockState state) {
+        if(world.isClient()) {
+            return;
+        }
+        markDirty(world, pos, state);
+    }
+
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
@@ -77,5 +86,4 @@ public class PedestalBlockEntity extends BlockEntity implements ImplementedInven
             world.updateListeners(this.pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
         }
     }
-
 }

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "_S_",
+    " C ",
+    "_S_"
+  ],
+  "key": {
+    "_": {
+      "item": "minecraft:stone_brick_slab"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "C": {
+      "item": "minecraft:chiseled_stone_bricks"
+    }
+  },
+  "result": {
+    "item": "hss:pedestal",
+    "count": 1
+  }
+}

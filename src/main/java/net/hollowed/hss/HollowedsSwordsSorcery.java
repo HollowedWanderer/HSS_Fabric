@@ -1,10 +1,15 @@
 package net.hollowed.hss;
 
 import net.fabricmc.api.ModInitializer;
+import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
-import net.hollowed.hss.common.item.ModItemGroups;
+import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.item.ModItems;
+import net.hollowed.hss.common.networking.AttackEntityHandler;
+import net.hollowed.hss.common.networking.CharmChecker;
+import net.hollowed.hss.common.networking.packets.*;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,19 +22,35 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("hss");
 
+	public static Identifier hssPath(String path) {
+		return new Identifier(MOD_ID, path);
+	}
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		LOGGER.info("It's magicking time");
 
+		AttackEntityHandler.register();
 
-
-		LOGGER.info("Hello Fabric world!");
-
+		ModParticles.PARTICLES.register();
 		ModBlockEntities.registerBlockEntities();
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
 		ModItemGroups.registerItemGroups();
+		ClientPacketHandlers.register();
+		CharmChecker.initialize();
+		UtilityMovePacket.register();
+		GroundAttackPacket.register();
+		HeavyGroundAttackPacket.register();
+		MovementAbilityPacket.register();
+		AttackPacket.register();
+		HeavyAttackPacket.register();
+		GrabPacket.register();
+		MeleePacket.register();
+
+		//Registry.register(Registries.PARTICLE_TYPE, new Identifier("hss", "dust"), ModParticles.DUST);
 	}
 }

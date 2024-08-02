@@ -1,5 +1,22 @@
 {
   "item.hss.soul_gem": "Soul Gem",
-  "itemGroup.hss.gems": "Gems",
-  "block.hss.soul_gem_block": "Soul Gem Block"
+  "item.hss.fragility_core": "Core of Fragility",
+  "item.hss.fortitude_core": "Core of Fortitude",
+  "item.hss.shadows_axis": "Shadow's Axis",
+  "item.hss.amalgamate": "The Amalgamate",
+  "itemGroup.hss.hss": "Swords & Sorcery",
+  "block.hss.soul_gem_block": "Soul Gem Block",
+  "block.hss.pedestal": "Pedestal",
+  "block.hss.rose": "Rose",
+  "block.hss.white_rose": "White Rose",
+  "block.hss.white_rose_bush": "White Rose Bush",
+
+  "item.hss.flaming_pendant": "Flaming Pendant",
+  "item.hss.permafrost_band": "Permafrost Band",
+
+  "tooltip.hss.folly_red": "FOLLY RED TOOLTIP LETS GO!!",
+
+  "category.hss.keybinds": "Hollowed's Swords & Sorcery",
+  "key.hss.utilityMove": "Charm Utility Move",
+  "key.hss.movementAbility": "Charm Movement Ability"
 }

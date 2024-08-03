@@ -67,7 +67,7 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		MeleePacket.register();
 
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "amenities"), modContainer, ResourcePackActivationType.NORMAL);
+			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
 }

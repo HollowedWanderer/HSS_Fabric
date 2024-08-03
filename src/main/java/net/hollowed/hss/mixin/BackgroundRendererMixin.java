@@ -160,7 +160,7 @@ public class BackgroundRendererMixin {
                 targetFogEnd = 120.0f;
             } else if (timeOfDay < 12000) {  // Day (6000 to 11999 ticks)
                 targetFogStart = 100.0f;
-                targetFogEnd = 300.0f;
+                targetFogEnd = 200.0f;
             } else if (timeOfDay < 18000) {  // Evening (12000 to 17999 ticks)
                 targetFogStart = 20.0f;
                 targetFogEnd = 120.0f;

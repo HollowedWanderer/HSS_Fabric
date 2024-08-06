@@ -26,6 +26,8 @@ public class ModItemGroups {
                 entries.add(ModItems.AMALGAMATE);
                 entries.add(ModItems.FLAMING_PENDANT);
                 entries.add(ModItems.PERMAFROST_BAND);
+                entries.add(ModBlocks.THAUMITE_BLOCK);
+                entries.add(ModBlocks.THAUMITE_GLASS);
             })
             .build();
 

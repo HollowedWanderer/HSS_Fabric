@@ -1,0 +1,20 @@
+{
+  "thaumite_place": {
+    "subtitle": "subtitles.block.generic.place",
+    "sounds": [
+      "hss:thaumite_place1",
+      "hss:thaumite_place2",
+      "hss:thaumite_place3",
+      "hss:thaumite_place4"
+    ]
+  },
+  "thaumite_break": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "hss:thaumite_break1",
+      "hss:thaumite_break2",
+      "hss:thaumite_break3",
+      "hss:thaumite_break4"
+    ]
+  }
+}

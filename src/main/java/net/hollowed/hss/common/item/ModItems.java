@@ -4,6 +4,7 @@ import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.item.abilities.*;
 import net.hollowed.hss.common.item.custom.CharmItem;
 import net.hollowed.hss.common.item.custom.FlamingPendantItem;
+import net.hollowed.hss.common.item.custom.GreatswordItem;
 import net.hollowed.hss.common.item.custom.PermafrostBandItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -17,8 +18,10 @@ public class ModItems {
     public static final Item SHADOWS_AXIS = registerItem("shadows_axis", new Item(new Item.Settings()));
     public static final Item AMALGAMATE = registerItem("amalgamate", new Item(new Item.Settings()));
 
+    public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade", new GreatswordItem(new Item.Settings()));
+
     public static final Item FLAMING_PENDANT = registerItem("flaming_pendant",
-            new FlamingPendantItem(new Item.Settings().maxCount(1),
+            new FlamingPendantItem(new Item.Settings().maxCount(1), "fire",
                     NormalAttack.class, //Normal attack
                     GroundAttack.class, //Ground attack
                     GrabAttack.class, //Grab attack
@@ -29,7 +32,7 @@ public class ModItems {
                     HeavyGroundAttack.class)); //Heavy ground attack
 
     public static final Item PERMAFROST_BAND = registerItem("permafrost_band",
-            new PermafrostBandItem(new Item.Settings().maxCount(1),
+            new PermafrostBandItem(new Item.Settings().maxCount(1), "ice",
                     IceNormalAttack.class, //Normal attack
                     IceGroundAttack.class, //Ground attack
                     IceGrabAttack.class, //Grab attack

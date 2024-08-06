@@ -12,6 +12,11 @@
     "BackgroundRendererMixin",
     "ClientPlayerInteractionManagerMixin",
     "EntityRendererMixin",
+    "ItemRendererAccessor",
+    "ItemRendererMixin",
     "MinecraftClientMixin",
+    "ModelLoaderMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerHeldItemFeatureRendererMixin"
   ]
 }

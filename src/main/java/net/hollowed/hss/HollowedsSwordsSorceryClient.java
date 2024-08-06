@@ -21,6 +21,7 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
     public void onInitializeClient() {
         BlockEntityRendererFactories.register(ModBlockEntities.PEDESTAL_BLOCK_ENTITY, PedestalRenderer::new);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.ROSE, ModBlocks.POTTED_ROSE, ModBlocks.WHITE_ROSE, ModBlocks.POTTED_WHITE_ROSE, ModBlocks.WHITE_ROSE_BUSH);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), ModBlocks.THAUMITE_GLASS);
 
         ParticleFactoryRegistry.getInstance().register(LASER.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SQUARE.get(), LodestoneWorldParticleType.Factory::new);

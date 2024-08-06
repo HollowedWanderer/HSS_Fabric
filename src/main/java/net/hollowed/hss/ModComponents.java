@@ -40,6 +40,19 @@ public final class ModComponents implements EntityComponentInitializer {
     public static final ComponentKey<BooleanComponent> MELEE_CHECKER =
             ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "melee_checker")), BooleanComponent.class);
 
+    public static final ComponentKey<BooleanComponent> FIRE_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "fire_bound")), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> ICE_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "ice_bound")), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> EARTH_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "earth_bound")), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> AIR_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "air_bound")), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> ARCANE_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "arcane_bound")), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> SHADOW_BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "shadow_bound")), BooleanComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(BOUND_INVENTORY, player -> new BooleanComponent() {
@@ -249,5 +262,143 @@ public final class ModComponents implements EntityComponentInitializer {
                 this.value = value;
             }
         }, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(FIRE_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("fire_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("fire_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(ICE_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("ice_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("ice_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(EARTH_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("earth_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("earth_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(AIR_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("air_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("air_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(ARCANE_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("arcane_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("arcane_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(SHADOW_BOUND, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("shadow_bound");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("shadow_bound", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.ALWAYS_COPY);
     }
 }

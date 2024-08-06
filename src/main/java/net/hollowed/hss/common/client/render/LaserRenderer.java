@@ -17,14 +17,14 @@ import java.awt.*;
 public class LaserRenderer {
 
     private static RenderTypeToken getRenderTypeToken() {
-        return RenderTypeToken.createToken(new Identifier(HollowedsSwordsSorcery.MOD_ID, "textures/vfx/laser.png"));
+        return RenderTypeToken.createToken(new Identifier(HollowedsSwordsSorcery.MOD_ID, "textures/vfx/chain.png"));
     }
 
     private static final LodestoneRenderType RENDER_LAYER = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(
             getRenderTypeToken());
 
     public static void renderLaser(MatrixStack matrixStack, float x, float y, float z, float size, Entity entity) {
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld();
+        ModVFXBuilders.WorldVFXBuilder builder = ModVFXBuilders.createWorld();
         builder.replaceBufferSource(RenderHandler.LATE_DELAYED_RENDER.getTarget())
                 .setRenderType(RENDER_LAYER)
                 .setColor(new Color(255, 255, 255, 255))
@@ -37,7 +37,7 @@ public class LaserRenderer {
         Vec3d endPos = new Vec3d(x, y + 50, z);
 
         matrixStack.translate(-entity.getX(), -entity.getY(), -entity.getZ());
-        builder.renderBeam(matrix4f, startPos, endPos, size);
+        builder.renderChain(matrix4f, startPos, endPos, size);
 
         matrixStack.pop();
     }

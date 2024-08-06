@@ -1,7 +1,7 @@
 package net.hollowed.hss.common.item.custom;
 
-import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.client.particles.ModScreenParticles;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import team.lodestar.lodestone.handlers.screenparticle.ParticleEmitterHandler;
@@ -17,8 +17,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class FlamingPendantItem extends CharmItem implements ParticleEmitterHandler.ItemParticleSupplier{
-    public FlamingPendantItem(Settings settings, Class<? extends Ability> rightClickAir, Class<? extends Ability> rightClickGround, Class<? extends Ability> hitEntityHand, Class<? extends Ability> hitEntityWeapon, Class<? extends Ability> leftClickAir, Class<? extends Ability> doubleTapControl, Class<? extends Ability> pressShiftInAir, Class<? extends Ability> leftClickGround) {
-        super(settings, rightClickAir, rightClickGround, hitEntityHand, hitEntityWeapon, leftClickAir, doubleTapControl, pressShiftInAir, leftClickGround);
+    public FlamingPendantItem(Settings settings, String charmType, Class<? extends Ability> rightClickAir, Class<? extends Ability> rightClickGround, Class<? extends Ability> hitEntityHand, Class<? extends Ability> hitEntityWeapon, Class<? extends Ability> leftClickAir, Class<? extends Ability> doubleTapControl, Class<? extends Ability> pressShiftInAir, Class<? extends Ability> leftClickGround) {
+        super(settings, charmType, rightClickAir, rightClickGround, hitEntityHand, hitEntityWeapon, leftClickAir, doubleTapControl, pressShiftInAir, leftClickGround);
     }
 
     Color startingColor = new Color(255, 166, 75);

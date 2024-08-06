@@ -51,7 +51,13 @@
 			"hss:normal_checker",
 			"hss:heavy_checker",
 			"hss:grab_checker",
-			"hss:melee_checker"
+			"hss:melee_checker",
+			"hss:fire_bound",
+			"hss:ice_bound",
+			"hss:earth_bound",
+			"hss:air_bound",
+			"hss:arcane_bound",
+			"hss:shadow_bound"
 		]
 	}
 }

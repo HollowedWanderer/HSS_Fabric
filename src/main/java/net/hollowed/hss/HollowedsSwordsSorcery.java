@@ -16,6 +16,7 @@ import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
 import net.hollowed.hss.common.networking.CharmChecker;
 import net.hollowed.hss.common.networking.packets.*;
+import net.hollowed.hss.common.sound.ModSounds;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourcePackProfile;
 import net.minecraft.resource.ResourceType;

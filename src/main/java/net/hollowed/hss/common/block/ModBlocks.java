@@ -2,6 +2,7 @@ package net.hollowed.hss.common.block;
 
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.block.custom.PedestalBlock;
+import net.hollowed.hss.common.sound.ModBlockSoundGroup;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.effect.StatusEffects;
@@ -35,7 +36,12 @@ public class ModBlocks {
     public static final Block POTTED_WHITE_ROSE = registerBlock("potted_white_rose", createFlowerPotBlock(WHITE_ROSE));
 
     public static final Block PEDESTAL = registerBlock("pedestal",
-            new PedestalBlock(AbstractBlock.Settings.create().sounds(BlockSoundGroup.LODESTONE).strength(1F, 1F).nonOpaque().requiresTool()));
+            new PedestalBlock(AbstractBlock.Settings.create().sounds(ModBlockSoundGroup.THAUMITE).strength(1F, 1F).nonOpaque().requiresTool()));
+
+    public static final Block THAUMITE_BLOCK = registerBlock("thaumite_block",
+            new Block(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE)));
+    public static final Block THAUMITE_GLASS = registerBlock("thaumite_glass",
+                    new GlassBlock(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().blockVision(Blocks::never).solidBlock(Blocks::never)));
 
 
     private static Block registerBlock(String name, Block block) {

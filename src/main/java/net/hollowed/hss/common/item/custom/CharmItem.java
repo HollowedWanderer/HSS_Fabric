@@ -13,6 +13,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+
 import static net.hollowed.hss.ModComponents.*;
 
 public class CharmItem extends Item {
@@ -25,7 +27,9 @@ public class CharmItem extends Item {
     private final Ability movementAbility;
     private final Ability heavyGroundAttack;
 
-    public CharmItem(Settings settings,
+    private String charmType;
+
+    public CharmItem(Settings settings, String charmType,
                      Class<? extends Ability> rightClickAir,
                      Class<? extends Ability> rightClickGround,
                      Class<? extends Ability> hitEntityHand,
@@ -43,6 +47,7 @@ public class CharmItem extends Item {
         this.utilityMove = createAbility(doubleTapControl);
         this.movementAbility = createAbility(pressShiftInAir);
         this.heavyGroundAttack = createAbility(leftClickGround);
+        this.charmType = charmType;
     }
 
     private Ability createAbility(Class<? extends Ability> abilityClass) {
@@ -62,43 +67,46 @@ public class CharmItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this)) {
-            if (BOUND_INVENTORY.get(player).getValue()) {
-                AttackChecker();
-                if (GROUND_CHECKER.get(player).getValue() && (player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) && !player.isSneaking()) {
-                    groundAttack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (UTILITY_CHECKER.get(player).getValue()) {
-                    utilityMove.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (MOVEMENT_CHECKER.get(player).getValue() && !player.isOnGround()) {
-                    movementAbility.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (HEAVY_GROUND_CHECKER.get(player).getValue() && (player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) && player.isSneaking()) {
-                    heavyGroundAttack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (NORMAL_CHECKER.get(player).getValue() && !player.isSneaking() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
-                    attack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (HEAVY_CHECKER.get(player).getValue() && player.isSneaking() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
-                    heavyAttack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (GRAB_CHECKER.get(player).getValue() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
-                    grabAttack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
-                }
-                if (MELEE_CHECKER.get(player).getValue() && player.getMainHandStack().getItem() != ItemStack.EMPTY.getItem()) {
-                    meleeAttack.useAbility(world, player);
-                    player.getItemCooldownManager().set(this, 20);
+            if (Objects.equals(charmType, "fire") && FIRE_BOUND.get(player).getValue() ||
+                    Objects.equals(charmType, "ice") && ICE_BOUND.get(player).getValue()) {
+                if (BOUND_INVENTORY.get(player).getValue()) {
+                    AttackChecker();
+                    if (GROUND_CHECKER.get(player).getValue() && (player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) && !player.isSneaking()) {
+                        groundAttack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (UTILITY_CHECKER.get(player).getValue()) {
+                        utilityMove.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (MOVEMENT_CHECKER.get(player).getValue() && !player.isOnGround()) {
+                        movementAbility.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (HEAVY_GROUND_CHECKER.get(player).getValue() && (player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) && player.isSneaking()) {
+                        heavyGroundAttack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (NORMAL_CHECKER.get(player).getValue() && !player.isSneaking() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
+                        attack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (HEAVY_CHECKER.get(player).getValue() && player.isSneaking() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
+                        heavyAttack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (GRAB_CHECKER.get(player).getValue() && player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) {
+                        grabAttack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
+                    if (MELEE_CHECKER.get(player).getValue() && player.getMainHandStack().getItem() != ItemStack.EMPTY.getItem()) {
+                        meleeAttack.useAbility(world, player);
+                        player.getItemCooldownManager().set(this, 20);
+                    }
                 }
             }
+            super.inventoryTick(stack, world, entity, slot, selected);
         }
-        super.inventoryTick(stack, world, entity, slot, selected);
     }
 
     @Environment(EnvType.CLIENT)

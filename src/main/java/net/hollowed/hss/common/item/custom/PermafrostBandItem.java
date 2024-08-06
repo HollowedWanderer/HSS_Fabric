@@ -14,8 +14,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class PermafrostBandItem extends CharmItem implements ParticleEmitterHandler.ItemParticleSupplier {
-    public PermafrostBandItem(Settings settings, Class<? extends Ability> rightClickAir, Class<? extends Ability> rightClickGround, Class<? extends Ability> hitEntityHand, Class<? extends Ability> hitEntityWeapon, Class<? extends Ability> leftClickAir, Class<? extends Ability> doubleTapControl, Class<? extends Ability> pressShiftInAir, Class<? extends Ability> leftClickGround) {
-        super(settings, rightClickAir, rightClickGround, hitEntityHand, hitEntityWeapon, leftClickAir, doubleTapControl, pressShiftInAir, leftClickGround);
+    public PermafrostBandItem(Settings settings, String charmType, Class<? extends Ability> rightClickAir, Class<? extends Ability> rightClickGround, Class<? extends Ability> hitEntityHand, Class<? extends Ability> hitEntityWeapon, Class<? extends Ability> leftClickAir, Class<? extends Ability> doubleTapControl, Class<? extends Ability> pressShiftInAir, Class<? extends Ability> leftClickGround) {
+        super(settings, charmType, rightClickAir, rightClickGround, hitEntityHand, hitEntityWeapon, leftClickAir, doubleTapControl, pressShiftInAir, leftClickGround);
     }
 
     Color startingColor = new Color(126, 182, 255);

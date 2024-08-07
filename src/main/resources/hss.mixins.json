@@ -15,7 +15,6 @@
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "MinecraftClientMixin",
-    "ModelLoaderMixin",
     "PlayerEntityRendererMixin",
     "PlayerHeldItemFeatureRendererMixin"
   ]

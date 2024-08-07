@@ -36,7 +36,7 @@ public class ModBlocks {
     public static final Block POTTED_WHITE_ROSE = registerBlock("potted_white_rose", createFlowerPotBlock(WHITE_ROSE));
 
     public static final Block PEDESTAL = registerBlock("pedestal",
-            new PedestalBlock(AbstractBlock.Settings.create().sounds(ModBlockSoundGroup.THAUMITE).strength(1F, 1F).nonOpaque().requiresTool()));
+            new PedestalBlock(AbstractBlock.Settings.create().sounds(BlockSoundGroup.LODESTONE).strength(1F, 1F).nonOpaque().requiresTool()));
 
     public static final Block THAUMITE_BLOCK = registerBlock("thaumite_block",
             new Block(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE)));

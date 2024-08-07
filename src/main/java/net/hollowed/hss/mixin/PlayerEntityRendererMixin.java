@@ -1,6 +1,6 @@
 package net.hollowed.hss.mixin;
 
-import net.hollowed.hss.common.item.custom.GreatswordItem;
+import net.hollowed.hss.common.item.custom.HollowedBladeItem;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -17,7 +17,7 @@ public abstract class PlayerEntityRendererMixin {
     @Inject(method = "getArmPose", at = @At("HEAD"), cancellable = true)
     private static void getArmPose(AbstractClientPlayerEntity player, Hand hand, CallbackInfoReturnable<BipedEntityModel.ArmPose> cir) {
         ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.getItem() instanceof GreatswordItem) {
+        if (itemStack.getItem() instanceof HollowedBladeItem) {
             if (!player.isUsingItem()) {
                 cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_CHARGE);
             }

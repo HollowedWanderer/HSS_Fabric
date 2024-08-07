@@ -2,14 +2,12 @@ package net.hollowed.hss.common.item;
 
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.item.abilities.*;
-import net.hollowed.hss.common.item.custom.CharmItem;
-import net.hollowed.hss.common.item.custom.FlamingPendantItem;
-import net.hollowed.hss.common.item.custom.GreatswordItem;
-import net.hollowed.hss.common.item.custom.PermafrostBandItem;
-import net.minecraft.item.Item;
+import net.hollowed.hss.common.item.custom.*;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 public class ModItems {
 
@@ -18,7 +16,8 @@ public class ModItems {
     public static final Item SHADOWS_AXIS = registerItem("shadows_axis", new Item(new Item.Settings()));
     public static final Item AMALGAMATE = registerItem("amalgamate", new Item(new Item.Settings()));
 
-    public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade", new GreatswordItem(new Item.Settings()));
+    public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade",
+            new HollowedBladeItem(ToolMaterials.NETHERITE, 4, -2.7f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
 
     public static final Item FLAMING_PENDANT = registerItem("flaming_pendant",
             new FlamingPendantItem(new Item.Settings().maxCount(1), "fire",

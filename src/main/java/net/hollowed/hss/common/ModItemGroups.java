@@ -28,6 +28,7 @@ public class ModItemGroups {
                 entries.add(ModItems.PERMAFROST_BAND);
                 entries.add(ModBlocks.THAUMITE_BLOCK);
                 entries.add(ModBlocks.THAUMITE_GLASS);
+                entries.add(ModItems.HOLLOWED_BLADE);
             })
             .build();
 

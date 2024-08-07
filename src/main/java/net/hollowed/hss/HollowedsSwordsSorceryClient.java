@@ -3,6 +3,7 @@ package net.hollowed.hss;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
@@ -11,6 +12,7 @@ import net.hollowed.hss.common.networking.ModKeyBindings;
 import net.hollowed.hss.common.networking.RightClickHandler;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.client.util.ModelIdentifier;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import static net.hollowed.hss.common.client.particles.ModParticles.*;
@@ -27,6 +29,10 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(SQUARE.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(DUST.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(RING.get(), LodestoneWorldParticleType.Factory::new);
+
+        ModelLoadingPlugin.register((context) -> {
+            context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand", "inventory"));
+        });
 
         ModKeyBindings.initialize();
 

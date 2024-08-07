@@ -48,10 +48,10 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
 
         if (itemStack.getItem() instanceof SwordItem || itemStack.getItem() instanceof ToolItem) {
             matrices.translate(0, 0.1f, 0);
-            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-45));
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45));
         }
 
-        itemRenderer.renderItem(itemStack, ModelTransformationMode.FIXED, light, overlay, matrices, vertexConsumers, world, (int) world.getTime());
+        itemRenderer.renderItem(itemStack, ModelTransformationMode.GUI, light, overlay, matrices, vertexConsumers, world, (int) world.getTime());
         matrices.pop();
     }
 }

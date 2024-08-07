@@ -22,53 +22,31 @@ public class HollowedBladeItem extends SwordItem {
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (Screen.hasShiftDown()) {
-            tooltip.add(getFormattedText("item.hss.greatsword.tooltip.shift.line1"));
-            tooltip.add(getFormattedText("item.hss.greatsword.tooltip.shift.line2"));
-            tooltip.add(getFormattedText("item.hss.greatsword.tooltip.shift.line3", true));
-            tooltip.add(getFormattedText("item.hss.greatsword.tooltip.shift.line4"));
-            tooltip.add(getFormattedText("item.hss.greatsword.tooltip.shift.line5"));
+            Text text1 = Text.translatable("item.hss.greatsword.tooltip.shift.line1").formatted(Formatting.GRAY);
+            Text text2 = Text.translatable("item.hss.greatsword.tooltip.shift.line2").formatted(Formatting.GRAY);
+            Text text3a = Text.translatable("item.hss.greatsword.tooltip.shift.line3a").formatted(Formatting.GRAY);
+            Text text3b = Text.translatable("item.hss.greatsword.tooltip.shift.line3b").formatted(Formatting.GRAY);
+            Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4").formatted(Formatting.GRAY);
+            Text text5 = Text.translatable("item.hss.greatsword.tooltip.shift.line5").formatted(Formatting.GRAY);
+
+            Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
+
+            Text combinedText = text3a.copy().append(textShift).append(text3b);
+
+            tooltip.add(text1);
+            tooltip.add(text2);
+            tooltip.add(combinedText);
+            tooltip.add(text4);
+            tooltip.add(text5);
         } else {
-            tooltip.add(getFormattedText1("item.hss.greatsword.tooltip", true));
-        }
-    }
+            Text texta = Text.translatable("item.hss.greatsword.tooltipa").formatted(Formatting.GRAY);
+            Text textb = Text.translatable("item.hss.greatsword.tooltipb").formatted(Formatting.GRAY);
+            Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift").formatted(Formatting.GOLD);
 
-    private MutableText getFormattedText(String key) {
-        return getFormattedText(key, false);
-    }
+            // Combine texts
+            Text combinedText = texta.copy().append(textShift).append(textb);
 
-    private MutableText getFormattedText(String key, boolean highlightRightClick) {
-        MutableText text = Text.translatable(key).formatted(Formatting.GRAY);
-        if (highlightRightClick) {
-            text = formatRightClickText(text);
+            tooltip.add(combinedText);
         }
-        return text;
-    }
-
-    private MutableText getFormattedText1(String key, boolean highlightShift) {
-        MutableText text = Text.translatable(key).formatted(Formatting.GRAY);
-        if (highlightShift) {
-            text = formatShiftText(text);
-        }
-        return text;
-    }
-
-    private MutableText formatRightClickText(MutableText text) {
-        String[] parts = text.getString().split("\\[Shift \\+ Right-click\\]");
-        MutableText formattedText = Text.literal(parts[0]).formatted(Formatting.GRAY);
-        formattedText.append(Text.literal("[Shift + Right-click]").formatted(Formatting.GOLD));
-        if (parts.length > 1) {
-            formattedText.append(Text.literal(parts[1]).formatted(Formatting.GRAY));
-        }
-        return formattedText;
-    }
-
-    private MutableText formatShiftText(MutableText text) {
-        String[] parts = text.getString().split("\\[Shift\\]");
-        MutableText formattedText = Text.literal(parts[0]).formatted(Formatting.GRAY);
-        formattedText.append(Text.literal("[Shift]").formatted(Formatting.GOLD));
-        if (parts.length > 1) {
-            formattedText.append(Text.literal(parts[1]).formatted(Formatting.GRAY));
-        }
-        return formattedText;
     }
 }

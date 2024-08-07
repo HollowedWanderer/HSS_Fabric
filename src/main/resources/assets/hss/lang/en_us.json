@@ -23,10 +23,14 @@
   "key.hss.movementAbility": "Charm Movement Ability",
 
   "item.hss.hollowed_blade": "The Hollowed Blade",
-  "item.hss.greatsword.tooltip": "Hold [Shift] for more",
+  "item.hss.greatsword.tooltipa": "Hold ",
+  "item.hss.greatsword.tooltip.shift": "[Shift]",
+  "item.hss.greatsword.tooltipb": " for more",
   "item.hss.greatsword.tooltip.shift.line1": "The blade of the Hollowed. The embodiment of the brittle cold.",
   "item.hss.greatsword.tooltip.shift.line2": "Made with the purest of cryosteels, able to resist any amount of heat.",
-  "item.hss.greatsword.tooltip.shift.line3": "Press [Shift + Right-click] to shatter the blade launching",
+  "item.hss.greatsword.tooltip.shift.line3a": "Press ",
+  "item.hss.greatsword.tooltip.shift.shift": "[Shift + Right-click]",
+  "item.hss.greatsword.tooltip.shift.line3b": " to shatter the blade launching",
   "item.hss.greatsword.tooltip.shift.line4": "cryosteel shards in all directions. The blade will slowly",
   "item.hss.greatsword.tooltip.shift.line5": "piece itself back together, however, the hilt is fragile."
 }

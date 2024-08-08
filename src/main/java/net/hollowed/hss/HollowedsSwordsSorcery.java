@@ -1,13 +1,10 @@
 package net.hollowed.hss;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
@@ -16,18 +13,12 @@ import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
 import net.hollowed.hss.common.networking.CharmChecker;
 import net.hollowed.hss.common.networking.packets.*;
-import net.hollowed.hss.common.sound.ModSounds;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourcePackProfile;
-import net.minecraft.resource.ResourceType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class HollowedsSwordsSorcery implements ModInitializer {
 	// This logger is used to write text to the console and the log file.

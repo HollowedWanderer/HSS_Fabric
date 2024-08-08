@@ -1,0 +1,29 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:item/handheld",
+	"textures": {
+		"layer0": "hss:item/hollowed_blade_shattered"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-141.4, -65.17, -108.23],
+			"translation": [2.25, 8, 4],
+			"scale": [1.7, 1.7, 0.85]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [37.56, 65.48, -70.85],
+			"translation": [2.25, 8.5, 4.25],
+			"scale": [1.7, 1.7, 0.85]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 50],
+			"translation": [1.13, 5.2, 1.13],
+			"scale": [1.36, 1.36, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -50],
+			"translation": [1.13, 5.2, 1.13],
+			"scale": [1.36, 1.36, 0.68]
+		}
+	}
+}

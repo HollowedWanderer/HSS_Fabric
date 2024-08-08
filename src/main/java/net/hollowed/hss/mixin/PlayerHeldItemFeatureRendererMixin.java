@@ -1,6 +1,7 @@
 package net.hollowed.hss.mixin;
 
 import net.hollowed.hss.common.item.ModItems;
+import net.hollowed.hss.common.item.custom.HollowedBladeItem;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
@@ -30,11 +31,11 @@ public abstract class PlayerHeldItemFeatureRendererMixin<T extends PlayerEntity,
     @Inject(method = "renderItem", at = @At("HEAD"), cancellable = true)
     protected void renderItem(LivingEntity entity, ItemStack stack, ModelTransformationMode transformationMode, Arm arm, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (!entity.isUsingItem()) {
-            if ((entity.getMainArm() == Arm.RIGHT && arm == Arm.LEFT) && entity.getMainHandStack().getItem() == ModItems.HOLLOWED_BLADE) {
+            if ((entity.getMainArm() == Arm.RIGHT && arm == Arm.LEFT) && entity.getMainHandStack().getItem() instanceof HollowedBladeItem) {
                 ci.cancel();
                 return;
             }
-            if ((entity.getMainArm() == Arm.LEFT && arm == Arm.RIGHT) && entity.getMainHandStack().getItem() == ModItems.HOLLOWED_BLADE) {
+            if ((entity.getMainArm() == Arm.LEFT && arm == Arm.RIGHT) && entity.getMainHandStack().getItem() instanceof HollowedBladeItem) {
                 ci.cancel();
                 return;
             }

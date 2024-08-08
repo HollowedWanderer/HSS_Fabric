@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hss:item/hollowed_blade_item_shattered"
+  }
+}

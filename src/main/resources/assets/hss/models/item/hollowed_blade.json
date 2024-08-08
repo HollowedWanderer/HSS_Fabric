@@ -2,5 +2,13 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "hss:item/hollowed_blade_item"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hss:shattered": 1.0
+      },
+      "model": "hss:item/hollowed_blade_shattered"
+    }
+  ]
 }

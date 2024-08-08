@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.block.entities.PedestalRenderer;
+import net.hollowed.hss.common.item.ModModelPredicateProvider;
 import net.hollowed.hss.common.networking.ModKeyBindings;
 import net.hollowed.hss.common.networking.RightClickHandler;
 import net.minecraft.client.render.RenderLayer;
@@ -30,8 +31,11 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(DUST.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(RING.get(), LodestoneWorldParticleType.Factory::new);
 
+        ModModelPredicateProvider.register();
+
         ModelLoadingPlugin.register((context) -> {
             context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand", "inventory"));
+            context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand_shattered", "inventory"));
         });
 
         ModKeyBindings.initialize();

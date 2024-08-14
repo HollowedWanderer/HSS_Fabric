@@ -1,6 +1,5 @@
 package net.hollowed.hss.mixin;
 
-import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.item.custom.HollowedBladeItem;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -22,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerHeldItemFeatureRenderer.class)
-public abstract class PlayerHeldItemFeatureRendererMixin<T extends PlayerEntity, M extends EntityModel<T> & ModelWithArms & ModelWithHead> extends HeldItemFeatureRenderer<T, M> {
+public abstract class HeldItemRendererMixin<T extends PlayerEntity, M extends EntityModel<T> & ModelWithArms & ModelWithHead> extends HeldItemFeatureRenderer<T, M> {
 
-    public PlayerHeldItemFeatureRendererMixin(FeatureRendererContext<T, M> context, HeldItemRenderer heldItemRenderer) {
+    public HeldItemRendererMixin(FeatureRendererContext<T, M> context, HeldItemRenderer heldItemRenderer) {
         super(context, heldItemRenderer);
     }
 

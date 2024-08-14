@@ -29,6 +29,7 @@ public class ModItemGroups {
                 entries.add(ModBlocks.THAUMITE_BLOCK);
                 entries.add(ModBlocks.THAUMITE_GLASS);
                 entries.add(ModItems.HOLLOWED_BLADE);
+                entries.add(ModItems.CRYO_SHARD);
             })
             .build();
 

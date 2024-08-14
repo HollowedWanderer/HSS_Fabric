@@ -12,13 +12,15 @@ import net.minecraft.util.Rarity;
 
 public class ModItems {
 
-    public static final Item FRAGILITY_CORE = registerItem("fragility_core", new Item(new Item.Settings()));
-    public static final Item FORTITUDE_CORE = registerItem("fortitude_core", new Item(new Item.Settings()));
-    public static final Item SHADOWS_AXIS = registerItem("shadows_axis", new Item(new Item.Settings()));
-    public static final Item AMALGAMATE = registerItem("amalgamate", new Item(new Item.Settings()));
+    public static final Item FRAGILITY_CORE = registerItem("fragility_core", new Item(new Item.Settings().maxCount(1)));
+    public static final Item FORTITUDE_CORE = registerItem("fortitude_core", new Item(new Item.Settings().maxCount(1)));
+    public static final Item SHADOWS_AXIS = registerItem("shadows_axis", new Item(new Item.Settings().maxCount(1)));
+    public static final Item AMALGAMATE = registerItem("amalgamate", new Item(new Item.Settings().maxCount(1)));
 
     public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade",
-            new HollowedBladeItem(ToolMaterials.NETHERITE, 3, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
+            new HollowedBladeItem(ToolMaterials.NETHERITE, 2, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
+
+    public static final Item CRYO_SHARD = registerItem("cryo_shard", new CryoShardItem(new Item.Settings()));
 
     public static final Item FLAMING_PENDANT = registerItem("flaming_pendant",
             new FlamingPendantItem(new Item.Settings().maxCount(1), "fire",

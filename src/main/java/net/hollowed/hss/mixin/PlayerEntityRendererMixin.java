@@ -18,7 +18,7 @@ public abstract class PlayerEntityRendererMixin {
     private static void getArmPose(AbstractClientPlayerEntity player, Hand hand, CallbackInfoReturnable<BipedEntityModel.ArmPose> cir) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.getItem() instanceof HollowedBladeItem) {
-            if (!player.isUsingItem()) {
+            if (!player.isUsingItem() && !player.handSwinging) {
                 cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_CHARGE);
             }
         }

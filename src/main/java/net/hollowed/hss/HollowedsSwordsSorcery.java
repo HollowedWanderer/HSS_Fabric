@@ -9,16 +9,19 @@ import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.client.particles.ModParticles;
+import net.hollowed.hss.common.enchantments.custom.MaelstromEnchantment;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
 import net.hollowed.hss.common.networking.CharmChecker;
+import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.*;
-import net.minecraft.server.world.ServerWorld;
+import net.hollowed.hss.common.silly.CopperConversionHandler;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 public class HollowedsSwordsSorcery implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -32,6 +35,8 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 	public static Identifier hssPath(String path) {
 		return new Identifier(MOD_ID, path);
 	}
+
+	public static Enchantment MAELSTROM = new MaelstromEnchantment();
 
 	@Override
 	public void onInitialize() {
@@ -57,6 +62,11 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		HeavyAttackPacket.register();
 		GrabPacket.register();
 		MeleePacket.register();
+		//new CopperConversionHandler();
+
+		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);
+
+		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "maelstrom"), MAELSTROM);
 
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);

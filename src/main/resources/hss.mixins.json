@@ -3,7 +3,8 @@
   "package": "net.hollowed.hss.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BundleItemMixin"
+    "BundleItemMixin",
+    "ProjectileBypassMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -12,10 +13,10 @@
     "BackgroundRendererMixin",
     "ClientPlayerInteractionManagerMixin",
     "EntityRendererMixin",
+    "HeldItemRendererMixin",
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "MinecraftClientMixin",
-    "PlayerEntityRendererMixin",
-    "PlayerHeldItemFeatureRendererMixin"
+    "PlayerEntityRendererMixin"
   ]
 }

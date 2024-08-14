@@ -169,14 +169,4 @@ public class PedestalBlock extends BlockWithEntity implements BlockEntityProvide
         }
         return 0;
     }
-
-    private void dropItem(ItemStack itemStack, PlayerEntity owner) {
-        if (owner instanceof ServerPlayerEntity serverPlayer) {
-            ItemEntity itemEntity = serverPlayer.dropItem(itemStack, false);
-            if (itemEntity != null) {
-                itemEntity.setPickupDelay(0);
-                itemEntity.setOwner(serverPlayer.getUuid());
-            }
-        }
-    }
 }

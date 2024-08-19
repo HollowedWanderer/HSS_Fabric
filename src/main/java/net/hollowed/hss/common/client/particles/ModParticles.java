@@ -33,4 +33,11 @@ public class ModParticles extends LodestoneParticleRegistry {
     public static final RegistryObject<LodestoneWorldParticleType> DUST = PARTICLES.register("dust", LodestoneWorldParticleType::new);
 
     public static final RegistryObject<LodestoneWorldParticleType> RING = PARTICLES.register("ring", LodestoneWorldParticleType::new);
+
+    public static final DefaultParticleType CRYO_SHARD = FabricParticleTypes.simple();
+
+    public static void registerParticles() {
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(HollowedsSwordsSorcery.MOD_ID, "cryo_shard"),
+                CRYO_SHARD);
+    }
 }

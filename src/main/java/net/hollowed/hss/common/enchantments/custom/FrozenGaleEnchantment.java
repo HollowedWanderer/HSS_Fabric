@@ -3,12 +3,14 @@ package net.hollowed.hss.common.enchantments.custom;
 import net.hollowed.hss.common.item.custom.HollowedBladeItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.enchantment.InfinityEnchantment;
+import net.minecraft.enchantment.MendingEnchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 
-public class MaelstromEnchantment extends Enchantment {
-    public MaelstromEnchantment() {
-        super(Enchantment.Rarity.UNCOMMON, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+public class FrozenGaleEnchantment extends Enchantment {
+    public FrozenGaleEnchantment() {
+        super(Rarity.UNCOMMON, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -27,6 +29,6 @@ public class MaelstromEnchantment extends Enchantment {
     }
 
     public boolean canAccept(Enchantment other) {
-        return !(other instanceof FrozenGaleEnchantment) && super.canAccept(other);
+        return !(other instanceof MaelstromEnchantment) && super.canAccept(other);
     }
 }

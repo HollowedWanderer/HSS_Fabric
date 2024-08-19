@@ -3,6 +3,7 @@ package net.hollowed.hss.common.entity;
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.entity.custom.CryoShardEntity;
 import net.hollowed.hss.common.entity.custom.FragileCryoShardEntity;
+import net.hollowed.hss.common.entity.custom.SpiralFragileCryoShardEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -24,6 +25,14 @@ public class ModEntities {
             "fragile_cryo_shard",
             SpawnGroup.MISC,
             FragileCryoShardEntity::new,
+            EntityDimensions.fixed(0.40F, 0.40F),
+            false
+    );
+
+    public static final EntityType<SpiralFragileCryoShardEntity> SPIRAL_FRAGILE_CRYO_SHARD = registerEntity(
+            "spiral_fragile_cryo_shard",
+            SpawnGroup.MISC,
+            SpiralFragileCryoShardEntity::new,
             EntityDimensions.fixed(0.40F, 0.40F),
             false
     );

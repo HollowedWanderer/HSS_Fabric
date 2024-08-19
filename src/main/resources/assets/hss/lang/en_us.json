@@ -34,5 +34,7 @@
   "item.hss.greatsword.tooltip.shift.line5": "piece itself back together, however, the hilt is fragile.",
 
   "enchantment.hss.maelstrom": "Maelstrom",
-  "enchantment.hss.maelstrom.description": "Shards of the shattered blade swirl around the player before quickly returning"
+  "enchantment.hss.maelstrom.description": "Shards of the shattered blade swirl around the player before quickly returning",
+  "enchantment.hss.frozen_gale": "Frozen Gale",
+  "enchantment.hss.frozen_gale.description": "???"
 }

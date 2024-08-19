@@ -17,7 +17,7 @@ public abstract class EntityRendererMixin {
     @Inject(method = "render*", at = @At("RETURN"))
     private void renderBeam(LivingEntity livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
         if (livingEntity instanceof VillagerEntity) {
-            LaserRenderer.renderLaser(matrixStack, (float) livingEntity.getX(), (float) livingEntity.getY(), (float) livingEntity.getZ(), 1.5f, livingEntity);
+            //LaserRenderer.renderLaser(matrixStack, (float) livingEntity.getX(), (float) livingEntity.getY(), (float) livingEntity.getZ(), 1.5f, livingEntity);
         }
     }
 }

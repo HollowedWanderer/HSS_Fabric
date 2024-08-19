@@ -9,6 +9,7 @@ import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.client.particles.ModParticles;
+import net.hollowed.hss.common.enchantments.custom.FrozenGaleEnchantment;
 import net.hollowed.hss.common.enchantments.custom.MaelstromEnchantment;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
@@ -16,6 +17,7 @@ import net.hollowed.hss.common.networking.CharmChecker;
 import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.*;
 import net.hollowed.hss.common.silly.CopperConversionHandler;
+import net.hollowed.hss.common.util.ModLootTableModifiers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -37,6 +39,7 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 	}
 
 	public static Enchantment MAELSTROM = new MaelstromEnchantment();
+	public static Enchantment FROZEN_GALE = new FrozenGaleEnchantment();
 
 	@Override
 	public void onInitialize() {
@@ -48,6 +51,7 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		AttackEntityHandler.register();
 
 		ModParticles.PARTICLES.register();
+		ModParticles.registerParticles();
 		ModBlockEntities.registerBlockEntities();
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
@@ -62,11 +66,13 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		HeavyAttackPacket.register();
 		GrabPacket.register();
 		MeleePacket.register();
+		ModLootTableModifiers.modifyLootTables();
 		//new CopperConversionHandler();
 
 		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);
 
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "maelstrom"), MAELSTROM);
+		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "frozen_gale"), FROZEN_GALE);
 
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);

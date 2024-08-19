@@ -67,8 +67,8 @@ public class CharmItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this)) {
-            if (Objects.equals(charmType, "fire") && FIRE_BOUND.get(player).getValue() ||
-                    Objects.equals(charmType, "ice") && ICE_BOUND.get(player).getValue()) {
+            //if (Objects.equals(charmType, "fire") && FIRE_BOUND.get(player).getValue() ||
+            //        Objects.equals(charmType, "ice") && ICE_BOUND.get(player).getValue()) {
                 if (BOUND_INVENTORY.get(player).getValue()) {
                     AttackChecker();
                     if (GROUND_CHECKER.get(player).getValue() && (player.getMainHandStack().getItem() == ItemStack.EMPTY.getItem()) && !player.isSneaking()) {
@@ -104,7 +104,7 @@ public class CharmItem extends Item {
                         player.getItemCooldownManager().set(this, 20);
                     }
                 }
-            }
+            //}
             super.inventoryTick(stack, world, entity, slot, selected);
         }
     }

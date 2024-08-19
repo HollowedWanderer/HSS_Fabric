@@ -2,8 +2,7 @@ package net.hollowed.hss.common.entity.custom;
 
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.item.ModItems;
-import net.hollowed.hss.common.networking.DelayHandler;
-import net.minecraft.block.BlockState;
+import net.hollowed.hss.common.util.CommandRunner;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -20,11 +19,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
 public class FragileCryoShardEntity extends ItemProjectileEntity {
@@ -45,6 +41,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 
 	protected void onBlockHit(BlockHitResult blockHitResult) {
 		super.onBlockHit(blockHitResult);
+		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 normal");
 		this.getWorld().playSound(
 				null,
 				this.getX(),
@@ -60,6 +57,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		super.onEntityHit(entityHitResult);
+		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 normal");
 		this.setDamage(1);
 		Entity entity = entityHitResult.getEntity();
 		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking()) {

@@ -8,15 +8,16 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
+import net.hollowed.hss.common.block.ModDispenserBehavior;
 import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.enchantments.custom.FrozenGaleEnchantment;
 import net.hollowed.hss.common.enchantments.custom.MaelstromEnchantment;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
 import net.hollowed.hss.common.networking.CharmChecker;
+import net.hollowed.hss.common.networking.ClientPacketHandlers;
 import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.*;
-import net.hollowed.hss.common.silly.CopperConversionHandler;
 import net.hollowed.hss.common.util.ModLootTableModifiers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.registry.Registries;
@@ -67,6 +68,7 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		GrabPacket.register();
 		MeleePacket.register();
 		ModLootTableModifiers.modifyLootTables();
+		ModDispenserBehavior.registerDefaults();
 		//new CopperConversionHandler();
 
 		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);

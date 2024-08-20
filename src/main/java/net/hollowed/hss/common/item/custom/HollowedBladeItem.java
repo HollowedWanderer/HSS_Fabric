@@ -7,6 +7,10 @@ import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.entity.custom.FragileCryoShardEntity;
 import net.hollowed.hss.common.entity.custom.SpiralFragileCryoShardEntity;
 import net.hollowed.hss.common.networking.DelayHandler;
+import net.hollowed.hss.common.networking.packets.FGRingParticlePacket;
+import net.hollowed.hss.common.networking.packets.ShatterRingParticlePacket;
+import net.hollowed.hss.common.util.CommandRunner;
+import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
@@ -75,19 +79,36 @@ public class HollowedBladeItem extends SwordItem {
         }
     }
 
+
+
+
+
+
+
+    // Make first person offhand not render while dashing
+
+
+
+
+
+
+
+
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (!((double) getPullProgress(this.getMaxUseTime(stack) - remainingUseTicks) <= 0.35) && user instanceof PlayerEntity) {
             if (!world.isClient && user.isSneaking() && !(EnchantmentHelper.getLevel(HollowedsSwordsSorcery.MAELSTROM, stack) > 0) && !(EnchantmentHelper.getLevel(HollowedsSwordsSorcery.FROZEN_GALE, stack) > 0)) {
                 if (!((PlayerEntity) user).getItemCooldownManager().isCoolingDown(stack.getItem())) {
                     shatter(stack, user.getWorld());
-                    ((PlayerEntity) user).getItemCooldownManager().set(stack.getItem(), 300);
+                    ((PlayerEntity) user).getItemCooldownManager().set(stack.getItem(), 300); // 300
                 }
 
                 // Number of cryo shards
-                int numberOfProjectiles = 48;
+                int numberOfProjectiles = 96;
 
                 double goldenRatio = (1 + Math.sqrt(5)) / 2;
                 double angleIncrement = Math.PI * 2 * goldenRatio;
+
+                ShatterRingParticlePacket.send(user.getPos(), world);
 
                 for (int i = 0; i < numberOfProjectiles; i++) {
                     double t = (double)i / (numberOfProjectiles - 1);
@@ -119,9 +140,9 @@ public class HollowedBladeItem extends SwordItem {
                 }
 
                 world.playSoundFromEntity(null, user, SoundEvents.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.NEUTRAL, 0.5F, 1F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-                world.playSoundFromEntity(null, user, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5F, 0.7F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+                world.playSoundFromEntity(null, user, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5F, 0.5F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
             } else if (!world.isClient && user.isSneaking() && EnchantmentHelper.getLevel(HollowedsSwordsSorcery.MAELSTROM, stack) > 0) {
-                int additionalProjectiles = 48; // Number of additional projectiles to launch forward
+                int additionalProjectiles = 24; // Number of additional projectiles to launch forward
                 Random random = new Random();
 
                 for (int i = 0; i < additionalProjectiles; i++) {
@@ -145,11 +166,14 @@ public class HollowedBladeItem extends SwordItem {
                 }
 
                 shatter(stack, user.getWorld());
-                ((PlayerEntity) user).getItemCooldownManager().set(stack.getItem(), 400);
+                ((PlayerEntity) user).getItemCooldownManager().set(stack.getItem(), 400); // 400
                 world.playSoundFromEntity(null, user, SoundEvents.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.NEUTRAL, 0.5F, 1F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
-                world.playSoundFromEntity(null, user, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5F, 0.7F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+                world.playSoundFromEntity(null, user, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5F, 0.5F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
             } else if (!world.isClient && user.isSneaking() && EnchantmentHelper.getLevel(HollowedsSwordsSorcery.FROZEN_GALE, stack) > 0) {
                 Vec3d lookDirection = user.getRotationVec(1.0f).normalize();
+                FGRingParticlePacket.send(user.getPos(), world, lookDirection);
+                DelayHandler.schedule(world, 5 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
+                DelayHandler.schedule(world, 10 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
                 double dashSpeed = 2d;
                 user.addVelocity(lookDirection.x * dashSpeed, lookDirection.y * dashSpeed, lookDirection.z * dashSpeed);
                 user.velocityModified = true;
@@ -162,6 +186,11 @@ public class HollowedBladeItem extends SwordItem {
                     stack.getOrCreateNbt().putBoolean("Dashing", false);
                 });
                 ((PlayerEntity) user).getItemCooldownManager().set(this, 80);
+                for (int i = 0; i < 7; i++) {
+                    DelayHandler.schedule(world, i * 2, () -> {
+                        CommandRunner.runCommandAsEntity(user, "particle minecraft:snowflake ~ ~ ~ 0 0 0 0.05 5 force");
+                    });
+                }
             }
         }
     }
@@ -214,7 +243,7 @@ public class HollowedBladeItem extends SwordItem {
         } else {
             if (((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem()) && ((PlayerEntity) entity).getMainHandStack() == stack) {
                 assert stack.getNbt() != null;
-                if (!stack.getNbt().getBoolean("DashCheck")) {
+                if (!stack.getNbt().getBoolean("DashCheck") && stack.getNbt().getBoolean("Shattered")) {
                     ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 1, 0, true, false));
                 }
             }
@@ -252,19 +281,47 @@ public class HollowedBladeItem extends SwordItem {
             Text text1 = Text.translatable("item.hss.greatsword.tooltip.shift.line1").formatted(Formatting.GRAY);
             Text text2 = Text.translatable("item.hss.greatsword.tooltip.shift.line2").formatted(Formatting.GRAY);
             Text text3a = Text.translatable("item.hss.greatsword.tooltip.shift.line3a").formatted(Formatting.GRAY);
-            Text text3b = Text.translatable("item.hss.greatsword.tooltip.shift.line3b").formatted(Formatting.GRAY);
-            Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4").formatted(Formatting.GRAY);
-            Text text5 = Text.translatable("item.hss.greatsword.tooltip.shift.line5").formatted(Formatting.GRAY);
+            if (EnchantmentHelper.getLevel(HollowedsSwordsSorcery.MAELSTROM, stack) > 0) {
+                Text text3b = Text.translatable("item.hss.greatsword.tooltip.shift.line3b.maelstrom").formatted(Formatting.GRAY);
+                Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4.maelstrom").formatted(Formatting.GRAY);
+                Text text5 = Text.translatable("item.hss.greatsword.tooltip.shift.line5").formatted(Formatting.GRAY);
 
-            Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
+                Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
 
-            Text combinedText = text3a.copy().append(textShift).append(text3b);
+                Text combinedText = text3a.copy().append(textShift).append(text3b);
 
-            tooltip.add(text1);
-            tooltip.add(text2);
-            tooltip.add(combinedText);
-            tooltip.add(text4);
-            tooltip.add(text5);
+                tooltip.add(text1);
+                tooltip.add(text2);
+                tooltip.add(combinedText);
+                tooltip.add(text4);
+                tooltip.add(text5);
+            } else if (EnchantmentHelper.getLevel(HollowedsSwordsSorcery.FROZEN_GALE, stack) > 0) {
+                Text text3b = Text.translatable("item.hss.greatsword.tooltip.shift.line3b.gale").formatted(Formatting.GRAY);
+                Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4.gale").formatted(Formatting.GRAY);
+
+                Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
+
+                Text combinedText = text3a.copy().append(textShift).append(text3b);
+
+                tooltip.add(text1);
+                tooltip.add(text2);
+                tooltip.add(combinedText);
+                tooltip.add(text4);
+            } else {
+                Text text3b = Text.translatable("item.hss.greatsword.tooltip.shift.line3b").formatted(Formatting.GRAY);
+                Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4").formatted(Formatting.GRAY);
+                Text text5 = Text.translatable("item.hss.greatsword.tooltip.shift.line5").formatted(Formatting.GRAY);
+
+                Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
+
+                Text combinedText = text3a.copy().append(textShift).append(text3b);
+
+                tooltip.add(text1);
+                tooltip.add(text2);
+                tooltip.add(combinedText);
+                tooltip.add(text4);
+                tooltip.add(text5);
+            }
         } else {
             Text texta = Text.translatable("item.hss.greatsword.tooltipa").formatted(Formatting.GRAY);
             Text textb = Text.translatable("item.hss.greatsword.tooltipb").formatted(Formatting.GRAY);

@@ -2,7 +2,12 @@ package net.hollowed.hss.common.entity.custom;
 
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.item.ModItems;
+import net.hollowed.hss.common.networking.DelayHandler;
+import net.hollowed.hss.common.sound.CryoShardFlying;
 import net.hollowed.hss.common.util.CommandRunner;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,9 +24,14 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class FragileCryoShardEntity extends ItemProjectileEntity {
 
@@ -30,7 +40,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 	}
 
 	public FragileCryoShardEntity(World world, LivingEntity user, ItemStack stack) {
-		super(ModEntities.CRYO_SHARD, user, world, stack);
+		super(ModEntities.FRAGILE_CRYO_SHARD, user, world, stack);
 		this.stack = stack.copy();
 	}
 
@@ -41,7 +51,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 
 	protected void onBlockHit(BlockHitResult blockHitResult) {
 		super.onBlockHit(blockHitResult);
-		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 normal");
+		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 force");
 		this.getWorld().playSound(
 				null,
 				this.getX(),
@@ -57,7 +67,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		super.onEntityHit(entityHitResult);
-		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 normal");
+		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 force");
 		this.setDamage(1);
 		Entity entity = entityHitResult.getEntity();
 		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking()) {
@@ -146,6 +156,84 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 
 				this.discard();
 			}
+		}
+	}
+
+	private CryoShardFlying soundInstance;
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		// Check if the projectile is on fire and discard it if so
+		if (this.isOnFire()) {
+			stopSound();
+			this.discard();
+			return;
+		}
+
+		boolean bl = this.isNoClip();
+		Vec3d vec3d = this.getVelocity();
+
+		// Initialize yaw and pitch based on velocity
+		if (this.prevPitch == 0.0F && this.prevYaw == 0.0F) {
+			double d = vec3d.horizontalLength();
+			this.setYaw((float)(MathHelper.atan2(vec3d.x, vec3d.z) * (180 / Math.PI)));
+			this.setPitch((float)(MathHelper.atan2(vec3d.y, d) * (180 / Math.PI)));
+			this.prevYaw = this.getYaw();
+			this.prevPitch = this.getPitch();
+		}
+
+		BlockPos blockPos = this.getBlockPos();
+		BlockState blockState = this.getWorld().getBlockState(blockPos);
+
+		// Check if the projectile is colliding with a block
+		if (!blockState.isAir() && !bl) {
+			VoxelShape voxelShape = blockState.getCollisionShape(this.getWorld(), blockPos);
+			if (!voxelShape.isEmpty()) {
+				Vec3d vec3d2 = this.getPos();
+
+				for (Box box : voxelShape.getBoundingBoxes()) {
+					if (box.offset(blockPos).contains(vec3d2)) {
+						this.inGround = true;
+						stopSound();
+						return;
+					}
+				}
+			}
+		}
+
+		// Manage sound instance
+		if (this.getWorld().isClient()) {
+			if (soundInstance == null) {
+				startSound();
+			} else {
+				// Update the position of the sound instance
+				soundInstance.setX(this.getX());
+				soundInstance.setY(this.getY());
+				soundInstance.setZ(this.getZ());
+			}
+		}
+
+		// Schedule the entity to be discarded after 400 ticks
+		DelayHandler.schedule(this.getWorld(), 400, () -> {
+			stopSound();
+			this.discard();
+		});
+	}
+
+	private void startSound() {
+		soundInstance = new CryoShardFlying(this);
+		SoundManager soundManager = MinecraftClient.getInstance().getSoundManager();
+		if (new Random().nextInt(50) > 44) {
+			soundManager.play(soundInstance);
+		}
+	}
+
+	private void stopSound() {
+		if (soundInstance != null) {
+			soundInstance.done(); // Mark sound as done
+			soundInstance = null;
 		}
 	}
 }

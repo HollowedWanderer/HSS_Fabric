@@ -27,14 +27,20 @@
   "item.hss.greatsword.tooltipb": " for more",
   "item.hss.greatsword.tooltip.shift.line1": "The blade of the Hollowed. The embodiment of the brittle cold.",
   "item.hss.greatsword.tooltip.shift.line2": "Made with the purest cryosteel, able to resist any amount of heat.",
-  "item.hss.greatsword.tooltip.shift.line3a": "Hold ",
+  "item.hss.greatsword.tooltip.shift.line3a": "Hold and release ",
   "item.hss.greatsword.tooltip.shift.shift": "[Shift + Right-click]",
   "item.hss.greatsword.tooltip.shift.line3b": " to shatter the blade launching",
   "item.hss.greatsword.tooltip.shift.line4": "cryosteel shards in all directions. The blade will slowly",
+  "item.hss.greatsword.tooltip.shift.line3b.maelstrom": " to shatter the blade spraying",
+  "item.hss.greatsword.tooltip.shift.line4.maelstrom": "cryosteel shards in a blizzard around you. The blade will slowly",
+  "item.hss.greatsword.tooltip.shift.line3b.gale": " to launch yourself in your look direction",
+  "item.hss.greatsword.tooltip.shift.line4.gale": "damaging and freezing nearby entities. However, it will not prevent fall damage.",
   "item.hss.greatsword.tooltip.shift.line5": "piece itself back together, however, the hilt is fragile.",
 
   "enchantment.hss.maelstrom": "Maelstrom",
-  "enchantment.hss.maelstrom.description": "Shards of the shattered blade swirl around the player before quickly returning",
+  "enchantment.hss.maelstrom.desc": "Shards of the shattered blade swirl around the player before returning",
+  "enchantment.hss.maelstrom.description": "Shards of the shattered blade swirl around the player before returning",
   "enchantment.hss.frozen_gale": "Frozen Gale",
-  "enchantment.hss.frozen_gale.description": "???"
+  "enchantment.hss.frozen_gale.desc": "Launches the player in their look direction in a icy blizzard freezing nearby entities when used",
+  "enchantment.hss.frozen_gale.description": "Launches the player in their look direction in a icy blizzard freezing nearby entities when used"
 }

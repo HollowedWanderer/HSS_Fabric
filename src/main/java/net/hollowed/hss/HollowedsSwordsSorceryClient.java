@@ -6,11 +6,9 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.block.entities.PedestalRenderer;
-import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.client.particles.custom.CryoShardParticle;
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.entity.renderer.ItemProjectileEntityRenderer;
@@ -40,6 +38,7 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(SQUARE.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(DUST.get(), LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(RING.get(), LodestoneWorldParticleType.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(THIN_RING.get(), LodestoneWorldParticleType.Factory::new);
 
         ParticleFactoryRegistry.getInstance().register(CRYO_SHARD, CryoShardParticle.Factory::new);
 

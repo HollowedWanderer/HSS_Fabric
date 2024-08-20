@@ -26,4 +26,8 @@ public class NetworkingConstants {
     public static final Identifier GRAB_PACKET_ID = new Identifier(MOD_ID, "grab_packet");
 
     public static final Identifier MELEE_PACKET_ID = new Identifier(MOD_ID, "melee_packet");
+
+    public static final Identifier SHATTER_RING_PACKET_ID = new Identifier(MOD_ID, "shatter_ring_packet");
+
+    public static final Identifier FG_RING_PACKET_ID = new Identifier(MOD_ID, "fg_ring_packet");
 }

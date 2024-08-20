@@ -34,6 +34,8 @@ public class ModParticles extends LodestoneParticleRegistry {
 
     public static final RegistryObject<LodestoneWorldParticleType> RING = PARTICLES.register("ring", LodestoneWorldParticleType::new);
 
+    public static final RegistryObject<LodestoneWorldParticleType> THIN_RING = PARTICLES.register("thin_ring", LodestoneWorldParticleType::new);
+
     public static final DefaultParticleType CRYO_SHARD = FabricParticleTypes.simple();
 
     public static void registerParticles() {

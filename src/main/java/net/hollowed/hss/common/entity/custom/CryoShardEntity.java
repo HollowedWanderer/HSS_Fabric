@@ -1,6 +1,5 @@
 package net.hollowed.hss.common.entity.custom;
 
-import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.DelayHandler;
@@ -8,7 +7,6 @@ import net.hollowed.hss.common.sound.CryoShardFlying;
 import net.hollowed.hss.common.util.CommandRunner;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.ElytraSoundInstance;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -16,14 +14,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -36,8 +31,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class CryoShardEntity extends ItemProjectileEntity {
 
 	public CryoShardEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
@@ -47,6 +40,13 @@ public class CryoShardEntity extends ItemProjectileEntity {
 	public CryoShardEntity(World world, LivingEntity user, ItemStack stack) {
 		super(ModEntities.CRYO_SHARD, user, world, stack);
 		this.stack = stack.copy();
+	}
+
+	// Constructor with position
+	public CryoShardEntity(World world, double x, double y, double z, ItemStack stack) {
+		super(ModEntities.CRYO_SHARD, world, stack);
+		this.updatePosition(x, y, z);
+		this.stack = new ItemStack(ModItems.CRYO_SHARD);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class CryoShardEntity extends ItemProjectileEntity {
 	protected void onEntityHit(EntityHitResult entityHitResult) {
 		super.onEntityHit(entityHitResult);
 		Entity entity = entityHitResult.getEntity();
-		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 normal");
+		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 force");
 		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking()) {
 			entity.setFrozenTicks(300);
 		} else if (!(entity instanceof PlayerEntity)) {
@@ -187,9 +187,16 @@ public class CryoShardEntity extends ItemProjectileEntity {
 			}
 		}
 
-		// Start the sound if it's not already playing
-		if (soundInstance == null && this.getWorld().isClient()) {
-			startSound();
+		// Manage sound instance
+		if (this.getWorld().isClient()) {
+			if (soundInstance == null) {
+				startSound();
+			} else {
+				// Update the position of the sound instance
+				soundInstance.setX(this.getX());
+				soundInstance.setY(this.getY());
+				soundInstance.setZ(this.getZ());
+			}
 		}
 
 		// Schedule the entity to be discarded after 400 ticks

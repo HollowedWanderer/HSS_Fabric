@@ -69,7 +69,7 @@ public class BackgroundRendererMixin {
         // Apply color changes based on submersion type
         if (cameraSubmersionType == CameraSubmersionType.WATER) {
             long l = Util.getMeasuringTimeMs();
-            int i = ((Biome) world.getBiome(BlockPos.ofFloored(camera.getPos())).value()).getWaterFogColor();
+            int i = world.getBiome(BlockPos.ofFloored(camera.getPos())).value().getWaterFogColor();
             if (lastWaterFogColorUpdateTime < 0L) {
                 waterFogColor = i;
                 nextWaterFogColor = i;
@@ -108,7 +108,6 @@ public class BackgroundRendererMixin {
             green = (float) (0.0 * transitionFactor + MathHelper.clamp(green * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
             blue = (float) (0.0 * transitionFactor + MathHelper.clamp(blue * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
         }
-
         // Apply the new color to the RenderSystem
         RenderSystem.clearColor(red, green, blue, 0.0f);
     }
@@ -122,6 +121,10 @@ public class BackgroundRendererMixin {
                 return;
             }
         }
+
+        // Apply view distance scaling
+        targetFogEnd = Math.min(targetFogEnd, viewDistance);
+        targetFogStart = Math.min(viewDistance - 40, targetFogStart);
 
         CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
         World world = camera.getFocusedEntity().getWorld();
@@ -150,24 +153,26 @@ public class BackgroundRendererMixin {
             boolean isInMangroveSwamp = world.getBiome(camera.getBlockPos()).matchesKey(BiomeKeys.MANGROVE_SWAMP);
             boolean isInSwamp = world.getBiome(camera.getBlockPos()).matchesKey(BiomeKeys.SWAMP);
             boolean isInDarkForest = world.getBiome(camera.getBlockPos()).matchesKey(BiomeKeys.DARK_FOREST);
+            boolean isInDesert = world.getBiome(camera.getBlockPos()).matchesKey(BiomeKeys.DESERT);
 
             // Get the time of day in ticks (0 to 23999)
             long timeOfDay = world.getTimeOfDay() % 24000;
 
             // Set fog density based on time of day
-            if (timeOfDay < 1000) {  // Morning (0 to 5999 ticks)
+            if (timeOfDay < 1000 && !isInDesert) { // Morning
                 targetFogStart = 20.0f;
-                targetFogEnd = 120.0f;
-            } else if (timeOfDay < 12000) {  // Day (6000 to 11999 ticks)
+                targetFogEnd = 150.0f;
+            } else if (timeOfDay < 12000) { // Noon
                 targetFogStart = 100.0f;
-                targetFogEnd = 200.0f;
-            } else if (timeOfDay < 18000) {  // Evening (12000 to 17999 ticks)
+                targetFogEnd = 600.0f;
+            } else if (timeOfDay < 18000) { // Evening
                 targetFogStart = 20.0f;
-                targetFogEnd = 120.0f;
-            } else {  // Night (18000 to 23999 ticks)
+                targetFogEnd = 350.0f;
+            } else { // Night
                 targetFogStart = 0.0f;
-                targetFogEnd = 80.0f;
+                targetFogEnd = 300.0f;
             }
+
             if (isInMangroveSwamp && yPos < 120) {
                 // Target values for extremely thick fog in mangrove swamp
                 targetFogStart = 0.0f;
@@ -181,24 +186,29 @@ public class BackgroundRendererMixin {
                 targetFogStart = 0.0f;
                 targetFogEnd = (float) (targetFogEnd * 0.266);
             }
-                if (yPos < seaLevel) {
-                    targetFogStart = (float) MathHelper.lerp(transitionFactor, 20.0f, 0.0f);
-                    targetFogEnd = (float) MathHelper.lerp(transitionFactor, 120.0f, 80.0f);
-                }
 
-                // Smoothly transition towards the target fog settings
-                long currentTime = System.currentTimeMillis();
-                float transitionSpeed = 0.5f;  // Adjust this value to change the transition speed
-                float deltaTime = (currentTime - lastUpdateTime) / 1000.0f;
+            if (yPos < seaLevel) {
+                targetFogStart = (float) MathHelper.lerp(transitionFactor, 20.0f, 0.0f);
+                targetFogEnd = (float) MathHelper.lerp(transitionFactor, 120.0f, 80.0f);
+            }
 
-                currentFogStart = MathHelper.lerp(transitionSpeed * deltaTime, currentFogStart, targetFogStart);
-                currentFogEnd = MathHelper.lerp(transitionSpeed * deltaTime, currentFogEnd, targetFogEnd);
+            // Apply view distance scaling
+            targetFogEnd = Math.min(targetFogEnd, viewDistance);
+            targetFogStart = Math.min(viewDistance - 60, targetFogStart);
 
-                // Apply fog settings to RenderSystem
-                RenderSystem.setShaderFogStart(currentFogStart);
-                RenderSystem.setShaderFogEnd(currentFogEnd);
+            // Smoothly transition towards the target fog settings
+            long currentTime = System.currentTimeMillis();
+            float transitionSpeed = 0.5f;  // Adjust this value to change the transition speed
+            float deltaTime = (currentTime - lastUpdateTime) / 1000.0f;
 
-                lastUpdateTime = currentTime;
+            currentFogStart = MathHelper.lerp(transitionSpeed * deltaTime, currentFogStart, targetFogStart);
+            currentFogEnd = MathHelper.lerp(transitionSpeed * deltaTime, currentFogEnd, targetFogEnd);
+
+            // Apply fog settings to RenderSystem
+            RenderSystem.setShaderFogStart(currentFogStart);
+            RenderSystem.setShaderFogEnd(currentFogEnd);
+
+            lastUpdateTime = currentTime;
         }
     }
 }

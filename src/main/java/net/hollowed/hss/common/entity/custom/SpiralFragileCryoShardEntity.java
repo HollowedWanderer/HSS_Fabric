@@ -3,8 +3,11 @@ package net.hollowed.hss.common.entity.custom;
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.DelayHandler;
+import net.hollowed.hss.common.sound.CryoShardFlying;
 import net.hollowed.hss.common.util.CommandRunner;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.SoundManager;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -30,6 +33,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Random;
 
 public class SpiralFragileCryoShardEntity extends ItemProjectileEntity {
 
@@ -157,13 +161,12 @@ public class SpiralFragileCryoShardEntity extends ItemProjectileEntity {
 		}
 	}
 
-
-	// ---------------------------------------------
-	// FIX PARTIAL TICKS - THEY CAUSE BUGGY VELOCITY
-	// ---------------------------------------------
 	public void tick() {
 		// Schedule the projectile to be discarded after a certain time
 		DelayHandler.schedule(this.getWorld(), 300, this::discard);
+		if (new Random().nextInt(25) > 23) {
+			CommandRunner.runCommandAsEntity(this, "particle minecraft:snowflake ~ ~ ~ 0 0 0 0.01 2 force");
+		}
 		super.tick();
 
 		// Discard the projectile if it's on fire
@@ -245,7 +248,36 @@ public class SpiralFragileCryoShardEntity extends ItemProjectileEntity {
 				}
 			}
 		}
+
+		// Manage sound instance
+		if (this.getWorld().isClient()) {
+			if (soundInstance == null) {
+				startSound();
+			} else {
+				// Update the position of the sound instance
+				soundInstance.setX(this.getX());
+				soundInstance.setY(this.getY());
+				soundInstance.setZ(this.getZ());
+			}
+		}
 	}
+
+	private void startSound() {
+		soundInstance = new CryoShardFlying(this);
+		SoundManager soundManager = MinecraftClient.getInstance().getSoundManager();
+		if (new Random().nextInt(50) > 44) {
+			soundManager.play(soundInstance);
+		}
+	}
+
+	private void stopSound() {
+		if (soundInstance != null) {
+			soundInstance.done(); // Mark sound as done
+			soundInstance = null;
+		}
+	}
+
+	private CryoShardFlying soundInstance;
 
 	private @NotNull Vec3d getVec3d(Entity owner) {
 		double orbitRadius = 2;

@@ -19,7 +19,7 @@ import java.awt.Color;
 import java.util.Random;
 
 @Environment(EnvType.CLIENT)
-public class DustParticleEffect {
+public class PedestalDustParticleEffect {
 
     public static void initialize() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -30,7 +30,7 @@ public class DustParticleEffect {
         });
     }
 
-    public static void spawnExampleParticles(World level, Vec3d pos) {
+    public static void spawnParticles(World level, Vec3d pos) {
         Random random = new Random();
         float randomX = -0.1f + random.nextFloat() * 0.2f; // Random value between -0.1 and 0.1
         float randomZ = -0.1f + random.nextFloat() * 0.2f; // Random value between -0.1 and 0.1

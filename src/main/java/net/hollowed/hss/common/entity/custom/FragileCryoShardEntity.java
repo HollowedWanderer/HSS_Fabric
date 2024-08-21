@@ -70,7 +70,7 @@ public class FragileCryoShardEntity extends ItemProjectileEntity {
 		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 force");
 		this.setDamage(1);
 		Entity entity = entityHitResult.getEntity();
-		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking()) {
+		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking() && !((PlayerEntity) entity).isCreative()) {
 			entity.setFrozenTicks(300);
 		} else if (!(entity instanceof PlayerEntity)) {
 			entity.setFrozenTicks(300);

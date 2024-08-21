@@ -13,6 +13,7 @@
     "BackgroundRendererMixin",
     "ClientPlayerInteractionManagerMixin",
     "EntityRendererMixin",
+    "FirstPersonItemMixin",
     "HeldItemRendererMixin",
     "ItemRendererAccessor",
     "ItemRendererMixin",

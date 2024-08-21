@@ -42,11 +42,9 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		this.stack = stack.copy();
 	}
 
-	// Constructor with position
-	public CryoShardEntity(World world, double x, double y, double z, ItemStack stack) {
-		super(ModEntities.CRYO_SHARD, world, stack);
-		this.updatePosition(x, y, z);
-		this.stack = new ItemStack(ModItems.CRYO_SHARD);
+	public CryoShardEntity(EntityType<? extends PersistentProjectileEntity> entityType, double d, double e, double f, World world, ItemStack stack) {
+		super(entityType, d, e, f, world, stack);
+		this.stack = stack.copy();
 	}
 
 	@Override
@@ -63,7 +61,7 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		super.onEntityHit(entityHitResult);
 		Entity entity = entityHitResult.getEntity();
 		CommandRunner.runCommandAsEntity(this, "particle hss:cryo_shard ~ ~0.4 ~ 0 0 0 0 3 force");
-		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking()) {
+		if (entity instanceof PlayerEntity && !((PlayerEntity) entity).isBlocking() && !((PlayerEntity) entity).isCreative()) {
 			entity.setFrozenTicks(300);
 		} else if (!(entity instanceof PlayerEntity)) {
 			entity.setFrozenTicks(300);
@@ -78,8 +76,8 @@ public class CryoShardEntity extends ItemProjectileEntity {
 				0.5F,
 				1.5F / (this.getWorld().getRandom().nextFloat() * 0.4F + 0.8F)
 		);
-		float f = (float)this.getVelocity().length();
-		int i = MathHelper.ceil(MathHelper.clamp((double)f * this.getDamage(), 0.0, 2.147483647E9));
+		float f = (float) this.getVelocity().length();
+		int i = MathHelper.ceil(MathHelper.clamp((double) f * this.getDamage(), 0.0, 2.147483647E9));
 
 		Entity entity2 = this.getOwner();
 		DamageSource damageSource;
@@ -88,20 +86,20 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		} else {
 			damageSource = this.getDamageSources().trident(this, entity2);
 			if (entity2 instanceof LivingEntity) {
-				((LivingEntity)entity2).onAttacking(entity);
+				((LivingEntity) entity2).onAttacking(entity);
 			}
 		}
 
 		boolean bl = entity.getType() == EntityType.ENDERMAN;
 		int j = entity.getFireTicks();
 
-		if (entity.damage(damageSource, (float)i)) {
+		if (entity.damage(damageSource, (float) i)) {
 			if (bl) {
 				return;
 			}
 
 			if (entity instanceof LivingEntity livingEntity) {
-                if (!this.getWorld().isClient && this.getPierceLevel() <= 0) {
+				if (!this.getWorld().isClient && this.getPierceLevel() <= 0) {
 					livingEntity.setStuckArrowCount(livingEntity.getStuckArrowCount() + 1);
 				}
 
@@ -115,12 +113,12 @@ public class CryoShardEntity extends ItemProjectileEntity {
 
 				if (!this.getWorld().isClient && entity2 instanceof LivingEntity) {
 					EnchantmentHelper.onUserDamaged(livingEntity, entity2);
-					EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity);
+					EnchantmentHelper.onTargetDamaged((LivingEntity) entity2, livingEntity);
 				}
 
 				this.onHit(livingEntity);
 				if (livingEntity != entity2 && livingEntity instanceof PlayerEntity && entity2 instanceof ServerPlayerEntity && !this.isSilent()) {
-					((ServerPlayerEntity)entity2).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER, 0.0F));
+					((ServerPlayerEntity) entity2).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PROJECTILE_HIT_PLAYER, 0.0F));
 				}
 			}
 
@@ -143,6 +141,11 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		}
 	}
 
+	@Override
+	public boolean isAttackable() {
+		return true;  // Ensure the entity is always attackable
+	}
+
 	private CryoShardFlying soundInstance;
 
 	@Override
@@ -162,8 +165,8 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		// Initialize yaw and pitch based on velocity
 		if (this.prevPitch == 0.0F && this.prevYaw == 0.0F) {
 			double d = vec3d.horizontalLength();
-			this.setYaw((float)(MathHelper.atan2(vec3d.x, vec3d.z) * (180 / Math.PI)));
-			this.setPitch((float)(MathHelper.atan2(vec3d.y, d) * (180 / Math.PI)));
+			this.setYaw((float) (MathHelper.atan2(vec3d.x, vec3d.z) * (180 / Math.PI)));
+			this.setPitch((float) (MathHelper.atan2(vec3d.y, d) * (180 / Math.PI)));
 			this.prevYaw = this.getYaw();
 			this.prevPitch = this.getPitch();
 		}
@@ -200,22 +203,26 @@ public class CryoShardEntity extends ItemProjectileEntity {
 		}
 
 		// Schedule the entity to be discarded after 400 ticks
-		DelayHandler.schedule(this.getWorld(), 400, () -> {
-			stopSound();
-			this.discard();
-		});
+		DelayHandler.schedule(this.getWorld(), 400, this::discard);
 	}
 
 	private void startSound() {
-		soundInstance = new CryoShardFlying(this);
-		SoundManager soundManager = MinecraftClient.getInstance().getSoundManager();
-		soundManager.play(soundInstance);
+		MinecraftClient client = MinecraftClient.getInstance();
+		SoundManager soundManager = client.getSoundManager();
+		CryoShardFlying instance = new CryoShardFlying(this);
+		soundManager.play(instance);
+		soundInstance = instance;
 	}
 
 	private void stopSound() {
 		if (soundInstance != null) {
-			soundInstance.done(); // Mark sound as done
-			soundInstance = null;
+			soundInstance.done();
 		}
+	}
+
+	// Prevent damage from fire and lava
+	@Override
+	public boolean isFireImmune() {
+		return true;
 	}
 }

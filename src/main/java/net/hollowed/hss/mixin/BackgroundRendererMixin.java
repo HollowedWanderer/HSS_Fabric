@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -106,7 +105,7 @@ public class BackgroundRendererMixin {
             // Apply the transition effect for non-submersion types
             red = (float) (0.0 * transitionFactor + MathHelper.clamp(red * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
             green = (float) (0.0 * transitionFactor + MathHelper.clamp(green * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
-            blue = (float) (0.0 * transitionFactor + MathHelper.clamp(blue * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
+            blue = (float) (0.0 * transitionFactor + MathHelper.clamp(blue * 2f, 0.0f, 1.0f) * (1 - transitionFactor));
         }
         // Apply the new color to the RenderSystem
         RenderSystem.clearColor(red, green, blue, 0.0f);

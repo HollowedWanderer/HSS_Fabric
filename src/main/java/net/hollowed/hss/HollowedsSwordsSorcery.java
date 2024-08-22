@@ -10,6 +10,7 @@ import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.block.ModDispenserBehavior;
 import net.hollowed.hss.common.client.particles.ModParticles;
+import net.hollowed.hss.common.effects.custom.ExpStatusEffect;
 import net.hollowed.hss.common.enchantments.custom.FrozenGaleEnchantment;
 import net.hollowed.hss.common.enchantments.custom.MaelstromEnchantment;
 import net.hollowed.hss.common.item.ModItems;
@@ -20,6 +21,7 @@ import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.*;
 import net.hollowed.hss.common.util.ModLootTableModifiers;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -41,6 +43,7 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 
 	public static Enchantment MAELSTROM = new MaelstromEnchantment();
 	public static Enchantment FROZEN_GALE = new FrozenGaleEnchantment();
+	public static final StatusEffect EXP = new ExpStatusEffect();
 
 	@Override
 	public void onInitialize() {
@@ -72,6 +75,8 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		//new CopperConversionHandler();
 
 		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);
+
+		//Registry.register(Registries.STATUS_EFFECT, new Identifier("hss", "exp"), EXP);
 
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "maelstrom"), MAELSTROM);
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "frozen_gale"), FROZEN_GALE);

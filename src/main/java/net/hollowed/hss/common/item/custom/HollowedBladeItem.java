@@ -10,17 +10,14 @@ import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.FGRingParticlePacket;
 import net.hollowed.hss.common.networking.packets.ShatterRingParticlePacket;
 import net.hollowed.hss.common.util.CommandRunner;
-import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +35,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -56,7 +52,7 @@ public class HollowedBladeItem extends SwordItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         assert attacker instanceof PlayerEntity;
-         if (((PlayerEntity) attacker).getItemCooldownManager().isCoolingDown(stack.getItem())) {
+         if (((PlayerEntity) attacker).getItemCooldownManager().isCoolingDown(this)) {
             stack.damage(100, ((PlayerEntity) attacker), (e) -> {
                 e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
             });
@@ -78,21 +74,6 @@ public class HollowedBladeItem extends SwordItem {
             stack.getOrCreateNbt().putBoolean("DashCheck", false);
         }
     }
-
-
-
-
-
-
-
-    // Make first person offhand not render while dashing
-
-
-
-
-
-
-
 
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (!((double) getPullProgress(this.getMaxUseTime(stack) - remainingUseTicks) <= 0.35) && user instanceof PlayerEntity) {

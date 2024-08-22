@@ -103,9 +103,9 @@ public class BackgroundRendererMixin {
             blue = 0.9f;
         } else {
             // Apply the transition effect for non-submersion types
-            red = (float) (0.0 * transitionFactor + MathHelper.clamp(red * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
+            red = (float) (0.0 * transitionFactor + MathHelper.clamp(red * 1.5f, 0.0f, 0.92f) * (1 - transitionFactor));
             green = (float) (0.0 * transitionFactor + MathHelper.clamp(green * 1.5f, 0.0f, 1.0f) * (1 - transitionFactor));
-            blue = (float) (0.0 * transitionFactor + MathHelper.clamp(blue * 2f, 0.0f, 1.0f) * (1 - transitionFactor));
+            blue = (float) (0.0 * transitionFactor + MathHelper.clamp(blue * 1.5f, 0.0f, 1.05f) * (1 - transitionFactor));
         }
         // Apply the new color to the RenderSystem
         RenderSystem.clearColor(red, green, blue, 0.0f);

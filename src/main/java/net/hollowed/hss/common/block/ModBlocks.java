@@ -42,6 +42,8 @@ public class ModBlocks {
             new Block(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE)));
     public static final Block THAUMITE_GLASS = registerBlock("thaumite_glass",
                     new GlassBlock(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().blockVision(Blocks::never).solidBlock(Blocks::never)));
+    public static final Block RESONATING_ALTAR = registerBlock("resonating_altar",
+            new Block(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().requiresTool()));
 
 
     private static Block registerBlock(String name, Block block) {

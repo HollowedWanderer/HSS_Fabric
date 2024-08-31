@@ -3,7 +3,11 @@
   "package": "net.hollowed.hss.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "backslot.BackslotMixin",
     "BundleItemMixin",
+    "FarlandsMixin",
+    "MinecraftServerMixin",
+    "backslot.PlayerInventoryMixin",
     "ProjectileBypassMixin"
   ],
   "injectors": {
@@ -15,6 +19,8 @@
     "EntityRendererMixin",
     "FirstPersonItemMixin",
     "HeldItemRendererMixin",
+    "IcePlayerModelMixin",
+    "backslot.InventoryScreenMixin",
     "ItemRendererAccessor",
     "ItemRendererMixin",
     "MinecraftClientMixin",

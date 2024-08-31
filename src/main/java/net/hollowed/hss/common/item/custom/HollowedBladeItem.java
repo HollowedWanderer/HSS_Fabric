@@ -10,8 +10,10 @@ import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.FGRingParticlePacket;
 import net.hollowed.hss.common.networking.packets.ShatterRingParticlePacket;
 import net.hollowed.hss.common.util.CommandRunner;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -258,6 +260,10 @@ public class HollowedBladeItem extends SwordItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        AbstractClientPlayerEntity player = MinecraftClient.getInstance().player;
+        if (player != null && player.isCreative()) {
+            tooltip.add(Text.translatable("itemGroup.hss.hss"));
+        }
         if (Screen.hasShiftDown()) {
             Text text1 = Text.translatable("item.hss.greatsword.tooltip.shift.line1").formatted(Formatting.GRAY);
             Text text2 = Text.translatable("item.hss.greatsword.tooltip.shift.line2").formatted(Formatting.GRAY);

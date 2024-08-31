@@ -9,10 +9,12 @@ import net.hollowed.hss.common.ModItemGroups;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
 import net.hollowed.hss.common.block.ModDispenserBehavior;
+import net.hollowed.hss.common.block.entities.ResonatingAltarBlockEntity;
 import net.hollowed.hss.common.client.particles.ModParticles;
 import net.hollowed.hss.common.effects.custom.ExpStatusEffect;
 import net.hollowed.hss.common.enchantments.custom.FrozenGaleEnchantment;
 import net.hollowed.hss.common.enchantments.custom.MaelstromEnchantment;
+import net.hollowed.hss.common.event.BlockShieldEvent;
 import net.hollowed.hss.common.item.ModItems;
 import net.hollowed.hss.common.networking.AttackEntityHandler;
 import net.hollowed.hss.common.networking.CharmChecker;
@@ -76,6 +78,8 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 
 		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);
 
+		BlockShieldEvent.register();
+
 		//Registry.register(Registries.STATUS_EFFECT, new Identifier("hss", "exp"), EXP);
 
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "maelstrom"), MAELSTROM);
@@ -84,5 +88,6 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
+
 	}
 }

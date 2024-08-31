@@ -12,7 +12,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public abstract class BundleItemMixin {
 
     @Final
     @Shadow
-    public static final int MAX_STORAGE = 256;
+    public static final int MAX_STORAGE = 128;
 
     @Shadow
     private static Optional<ItemStack> removeFirstStack(ItemStack stack) {

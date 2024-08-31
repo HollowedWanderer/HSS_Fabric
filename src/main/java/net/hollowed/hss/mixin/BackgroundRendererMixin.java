@@ -123,7 +123,7 @@ public class BackgroundRendererMixin {
 
         // Apply view distance scaling
         targetFogEnd = Math.min(targetFogEnd, viewDistance);
-        targetFogStart = Math.min(viewDistance - 40, targetFogStart);
+        targetFogStart = Math.min(viewDistance - 40, targetFogStart - 40);
 
         CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
         World world = camera.getFocusedEntity().getWorld();

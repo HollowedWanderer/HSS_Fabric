@@ -3,7 +3,9 @@ package net.hollowed.hss.common.item;
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.item.abilities.*;
 import net.hollowed.hss.common.item.custom.*;
+import net.hollowed.hss.common.sound.ModSounds;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -17,8 +19,12 @@ public class ModItems {
     public static final Item SHADOWS_AXIS = registerItem("shadows_axis", new Item(new Item.Settings().maxCount(1)));
     public static final Item AMALGAMATE = registerItem("amalgamate", new Item(new Item.Settings().maxCount(1)));
 
+    public static final Item MUSIC_DISC_THAUMITE = registerItem("music_disc_thaumite", new MusicDiscItem(3, ModSounds.BYE_BYE_BYE_EVENT, new Item.Settings().maxCount(1), 202));
+
     public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade",
             new HollowedBladeItem(ToolMaterials.NETHERITE, 2, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
+
+    public static final Item VOLCANIC_VALOR = registerItem("volcanic_valor", new VolcanicValor(ToolMaterials.NETHERITE, 2, -2.4f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.UNCOMMON)));
 
     public static final Item CRYO_SHARD = registerItem("cryo_shard", new CryoShardItem(new Item.Settings()));
 

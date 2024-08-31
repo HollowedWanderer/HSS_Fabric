@@ -19,13 +19,17 @@
 			"net.hollowed.hss.HollowedsSwordsSorcery"
 		],
 		"client": [
-          "net.hollowed.hss.HollowedsSwordsSorceryClient"
+          	"net.hollowed.hss.HollowedsSwordsSorceryClient",
+			"net.hollowed.hss.common.EntitiesClient"
 		],
 		"fabric-datagen": [
 			"net.hollowed.hss.HollowedsSwordsSorceryDataGenerator"
 		],
 		"cardinal-components": [
 			"net.hollowed.hss.ModComponents"
+		],
+		"fabric-gametest": [
+			"net.hollowed.hss.common.util.ModTests"
 		]
 	},
 	"mixins": [

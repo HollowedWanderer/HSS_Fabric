@@ -1,6 +1,5 @@
 package net.hollowed.hss.mixin;
 
-import net.hollowed.hss.common.client.render.LaserRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;

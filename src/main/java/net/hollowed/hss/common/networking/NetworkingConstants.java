@@ -7,6 +7,8 @@ import static net.hollowed.hss.HollowedsSwordsSorcery.MOD_ID;
 public class NetworkingConstants {
     public static final Identifier PEDESTAL_UPDATE_PACKET_ID = new Identifier(MOD_ID, "pedestal_update");
 
+    public static final Identifier ALTAR_UPDATE_PACKET_ID = new Identifier(MOD_ID, "altar_update");
+
     public static final Identifier DUST_PARTICLE_PACKET_ID = new Identifier(MOD_ID, "particle_spawn");
 
     public static final Identifier RING_PARTICLE_PACKET_ID = new Identifier(MOD_ID, "ring_particle_spawn");
@@ -30,4 +32,14 @@ public class NetworkingConstants {
     public static final Identifier SHATTER_RING_PACKET_ID = new Identifier(MOD_ID, "shatter_ring_packet");
 
     public static final Identifier FG_RING_PACKET_ID = new Identifier(MOD_ID, "fg_ring_packet");
+
+    public static final Identifier ALTAR_PLACE_PARTICLE_PACKET_ID = new Identifier(MOD_ID, "altar_place_particle_spawn");
+
+    public static final Identifier ALTAR_ORBIT_PACKET_ID = new Identifier(MOD_ID, "altar_orbit_packet");
+
+    public static final Identifier ALTAR_EXPLODE_PACKET_ID = new Identifier(MOD_ID, "altar_explode_packet");
+
+    public static final Identifier ALTAR_CHARGE_PACKET_ID = new Identifier(MOD_ID, "altar_charge_packet");
+
+    public static final Identifier ALTAR_LASER_PACKET_ID = new Identifier(MOD_ID, "altar_laser_packet");
 }

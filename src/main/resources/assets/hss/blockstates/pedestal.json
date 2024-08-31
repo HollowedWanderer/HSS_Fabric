@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
+    "part=default": {
       "model": "hss:block/pedestal"
+    },
+    "part=bottom": {
+      "model": "hss:block/pedestal_bottom"
+    },
+    "part=middle": [
+      {
+        "model": "hss:block/pedestal_middle"
+      },
+      {
+        "model": "hss:block/pedestal_middle_cracked"
+      }
+    ],
+    "part=top": {
+      "model": "hss:block/pedestal_top"
     }
   }
 }

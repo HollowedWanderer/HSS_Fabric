@@ -16,5 +16,37 @@
       "hss:thaumite_break3",
       "hss:thaumite_break4"
     ]
+  },
+  "altar_place_item": {
+    "subtitle": "subtitles.hss.altar_place_item",
+    "sounds": [
+      "hss:altar_place_item"
+    ]
+  },
+  "thaumite_laser": {
+    "subtitle": "subtitles.hss.thaumite_laser",
+    "sounds": [
+      "hss:thaumite_laser"
+    ]
+  },
+  "thaumite_shake": {
+    "subtitle": "subtitles.hss.thaumite_shake",
+    "sounds": [
+      "hss:thaumite_shake"
+    ]
+  },
+  "thaumite_explosion": {
+    "subtitle": "subtitles.hss.thaumite_explosion",
+    "sounds": [
+      "hss:thaumite_explosion"
+    ]
+  },
+  "bye_bye_bye": {
+    "sounds": [
+      {
+        "name": "hss:bye_bye_bye",
+        "stream": true
+      }
+    ]
   }
 }

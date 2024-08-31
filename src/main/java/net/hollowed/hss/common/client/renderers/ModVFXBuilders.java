@@ -1,7 +1,6 @@
-package net.hollowed.hss.common.client.render;
+package net.hollowed.hss.common.client.renderers;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;

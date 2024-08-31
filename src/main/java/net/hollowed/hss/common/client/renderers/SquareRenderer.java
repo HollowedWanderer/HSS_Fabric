@@ -1,4 +1,4 @@
-package net.hollowed.hss.common.client.render;
+package net.hollowed.hss.common.client.renderers;
 
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.minecraft.client.util.math.MatrixStack;

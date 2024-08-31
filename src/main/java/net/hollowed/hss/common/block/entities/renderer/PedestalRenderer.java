@@ -1,5 +1,6 @@
-package net.hollowed.hss.common.block.entities;
+package net.hollowed.hss.common.block.entities.renderer;
 
+import net.hollowed.hss.common.block.entities.PedestalBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -31,8 +32,8 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
             PlayerEntity player = MinecraftClient.getInstance().player;
             if (player != null) {
                 World world = player.getWorld();
-                float bob = (float) (Math.sin((player.age + tickDelta) * 0.1f) * 0.0875f);
-                float rotation = (player.age + tickDelta) * 2; // Smoother rotation using tickDelta
+                float bob = (float) (Math.sin((world.getTime() + tickDelta) * 0.1f) * 0.0875f);
+                float rotation = (world.getTime() + tickDelta) * 2; // Smoother rotation using tickDelta
                 renderItem(heldItem, ITEM_POS.add(0, bob, 0), rotation, matrices, vertexConsumers, light, overlay, world);
             }
         }

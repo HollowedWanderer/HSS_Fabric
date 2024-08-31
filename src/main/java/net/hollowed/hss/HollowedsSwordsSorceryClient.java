@@ -8,7 +8,8 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.hollowed.hss.common.block.ModBlockEntities;
 import net.hollowed.hss.common.block.ModBlocks;
-import net.hollowed.hss.common.block.entities.PedestalRenderer;
+import net.hollowed.hss.common.block.entities.renderer.AltarRenderer;
+import net.hollowed.hss.common.block.entities.renderer.PedestalRenderer;
 import net.hollowed.hss.common.client.particles.custom.CryoShardParticle;
 import net.hollowed.hss.common.entity.ModEntities;
 import net.hollowed.hss.common.entity.renderer.ItemProjectileEntityRenderer;
@@ -27,7 +28,8 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockEntityRendererFactories.register(ModBlockEntities.PEDESTAL_BLOCK_ENTITY, PedestalRenderer::new);
-        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.ROSE, ModBlocks.POTTED_ROSE, ModBlocks.WHITE_ROSE, ModBlocks.POTTED_WHITE_ROSE, ModBlocks.WHITE_ROSE_BUSH, ModBlocks.RESONATING_ALTAR);
+        BlockEntityRendererFactories.register(ModBlockEntities.RESONATING_ALTAR_BLOCK_ENTITY, AltarRenderer::new);
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), ModBlocks.ROSE, ModBlocks.POTTED_ROSE, ModBlocks.WHITE_ROSE, ModBlocks.POTTED_WHITE_ROSE, ModBlocks.WHITE_ROSE_BUSH, ModBlocks.RESONATING_ALTAR, ModBlocks.PEDESTAL);
         BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(), ModBlocks.THAUMITE_GLASS);
 
         EntityRendererRegistry.register(ModEntities.CRYO_SHARD, ItemProjectileEntityRenderer::new);

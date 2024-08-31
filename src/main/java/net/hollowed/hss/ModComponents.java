@@ -6,6 +6,8 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.hollowed.hss.common.networking.BooleanComponent;
+import net.hollowed.hss.common.networking.StringComponent;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -40,18 +42,8 @@ public final class ModComponents implements EntityComponentInitializer {
     public static final ComponentKey<BooleanComponent> MELEE_CHECKER =
             ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "melee_checker")), BooleanComponent.class);
 
-    public static final ComponentKey<BooleanComponent> FIRE_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "fire_bound")), BooleanComponent.class);
-    public static final ComponentKey<BooleanComponent> ICE_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "ice_bound")), BooleanComponent.class);
-    public static final ComponentKey<BooleanComponent> EARTH_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "earth_bound")), BooleanComponent.class);
-    public static final ComponentKey<BooleanComponent> AIR_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "air_bound")), BooleanComponent.class);
-    public static final ComponentKey<BooleanComponent> ARCANE_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "arcane_bound")), BooleanComponent.class);
-    public static final ComponentKey<BooleanComponent> SHADOW_BOUND =
-            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "shadow_bound")), BooleanComponent.class);
+    public static final ComponentKey<StringComponent> BOUND =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "fire_bound")), StringComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
@@ -262,143 +254,28 @@ public final class ModComponents implements EntityComponentInitializer {
                 this.value = value;
             }
         }, RespawnCopyStrategy.LOSSLESS_ONLY);
-        registry.registerForPlayers(FIRE_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
+        registry.registerForPlayers(BOUND, player -> new StringComponent() {
+            private String value = "";
 
             @Override
             public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("fire_bound");
+                value = tag.getString("bound");
             }
 
             @Override
             public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("fire_bound", value);
+                tag.putString("bound", value);
             }
 
             @Override
-            public boolean getValue() {
+            public String getValue() {
                 return value;
             }
 
             @Override
-            public void setValue(boolean value) {
+            public void setValue(String value) {
                 this.value = value;
             }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
-        registry.registerForPlayers(ICE_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
-
-            @Override
-            public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("ice_bound");
-            }
-
-            @Override
-            public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("ice_bound", value);
-            }
-
-            @Override
-            public boolean getValue() {
-                return value;
-            }
-
-            @Override
-            public void setValue(boolean value) {
-                this.value = value;
-            }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
-        registry.registerForPlayers(EARTH_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
-
-            @Override
-            public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("earth_bound");
-            }
-
-            @Override
-            public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("earth_bound", value);
-            }
-
-            @Override
-            public boolean getValue() {
-                return value;
-            }
-
-            @Override
-            public void setValue(boolean value) {
-                this.value = value;
-            }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
-        registry.registerForPlayers(AIR_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
-
-            @Override
-            public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("air_bound");
-            }
-
-            @Override
-            public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("air_bound", value);
-            }
-
-            @Override
-            public boolean getValue() {
-                return value;
-            }
-
-            @Override
-            public void setValue(boolean value) {
-                this.value = value;
-            }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
-        registry.registerForPlayers(ARCANE_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
-
-            @Override
-            public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("arcane_bound");
-            }
-
-            @Override
-            public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("arcane_bound", value);
-            }
-
-            @Override
-            public boolean getValue() {
-                return value;
-            }
-
-            @Override
-            public void setValue(boolean value) {
-                this.value = value;
-            }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
-        registry.registerForPlayers(SHADOW_BOUND, player -> new BooleanComponent() {
-            private boolean value = false;
-
-            @Override
-            public void readFromNbt(@NotNull NbtCompound tag) {
-                value = tag.getBoolean("shadow_bound");
-            }
-
-            @Override
-            public void writeToNbt(@NotNull NbtCompound tag) {
-                tag.putBoolean("shadow_bound", value);
-            }
-
-            @Override
-            public boolean getValue() {
-                return value;
-            }
-
-            @Override
-            public void setValue(boolean value) {
-                this.value = value;
-            }
-        }, RespawnCopyStrategy.ALWAYS_COPY);
+        }, RespawnCopyStrategy.CHARACTER);
     }
 }

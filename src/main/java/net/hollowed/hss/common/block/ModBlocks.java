@@ -2,6 +2,7 @@ package net.hollowed.hss.common.block;
 
 import net.hollowed.hss.HollowedsSwordsSorcery;
 import net.hollowed.hss.common.block.custom.PedestalBlock;
+import net.hollowed.hss.common.block.custom.ResonatingAltarBlock;
 import net.hollowed.hss.common.sound.ModBlockSoundGroup;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
@@ -43,7 +44,7 @@ public class ModBlocks {
     public static final Block THAUMITE_GLASS = registerBlock("thaumite_glass",
                     new GlassBlock(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().blockVision(Blocks::never).solidBlock(Blocks::never)));
     public static final Block RESONATING_ALTAR = registerBlock("resonating_altar",
-            new Block(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().requiresTool()));
+            new ResonatingAltarBlock(AbstractBlock.Settings.copy(Blocks.AMETHYST_BLOCK).sounds(ModBlockSoundGroup.THAUMITE).nonOpaque().requiresTool()));
 
 
     private static Block registerBlock(String name, Block block) {

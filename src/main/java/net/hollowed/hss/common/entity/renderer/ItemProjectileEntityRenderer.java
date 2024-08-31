@@ -67,8 +67,6 @@ public class ItemProjectileEntityRenderer extends EntityRenderer<ItemProjectileE
 		matrices.pop();
 	}
 
-
-
 	@Override
 	public Identifier getTexture(ItemProjectileEntity entity) {
 		return null;

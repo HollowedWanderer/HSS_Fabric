@@ -2,6 +2,7 @@ package net.hollowed.hss;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -21,14 +22,21 @@ import net.hollowed.hss.common.networking.CharmChecker;
 import net.hollowed.hss.common.networking.ClientPacketHandlers;
 import net.hollowed.hss.common.networking.DelayHandler;
 import net.hollowed.hss.common.networking.packets.*;
+import net.hollowed.hss.common.util.KeybindEventHandler;
 import net.hollowed.hss.common.util.ModLootTableModifiers;
+import net.hollowed.hss.common.util.ModWorldEvents;
+import net.hollowed.hss.common.worldEvents.TestEvent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import team.lodestar.lodestone.handlers.WorldEventHandler;
+import team.lodestar.lodestone.registry.common.LodestoneWorldEventTypeRegistry;
 
 public class HollowedsSwordsSorcery implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -74,20 +82,27 @@ public class HollowedsSwordsSorcery implements ModInitializer {
 		MeleePacket.register();
 		ModLootTableModifiers.modifyLootTables();
 		ModDispenserBehavior.registerDefaults();
+		BackSlotPacket.register();
 		//new CopperConversionHandler();
 
 		ServerTickEvents.END_SERVER_TICK.register(DelayHandler::tick);
-
+		ServerWorldEvents.LOAD.register(this::onWorldLoad);
 		BlockShieldEvent.register();
 
-		//Registry.register(Registries.STATUS_EFFECT, new Identifier("hss", "exp"), EXP);
+		LodestoneWorldEventTypeRegistry.registerEventType(ModWorldEvents.TEST_EVENT);
+
+		//Registry.register(Registries.STATUS_EFFECT, new Identifier("hss", "xp"), XP);
 
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "maelstrom"), MAELSTROM);
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "frozen_gale"), FROZEN_GALE);
 
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
-		});
+//		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
+//			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(MOD_ID, "Amenities"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
+//		});
 
+	}
+
+	private void onWorldLoad(MinecraftServer server, ServerWorld world) {
+		//WorldEventHandler.addWorldEvent(world, new TestEvent());
 	}
 }

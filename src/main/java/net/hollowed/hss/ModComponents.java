@@ -21,6 +21,9 @@ public final class ModComponents implements EntityComponentInitializer {
     public static final ComponentKey<BooleanComponent> UTILITY_CHECKER =
             ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "utility_checker")), BooleanComponent.class);
 
+    public static final ComponentKey<BooleanComponent> BACKSLOT_SWITCH =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "backslot_switch")), BooleanComponent.class);
+
     public static final ComponentKey<BooleanComponent> GROUND_CHECKER =
             ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "ground_checker")), BooleanComponent.class);
 
@@ -93,6 +96,29 @@ public final class ModComponents implements EntityComponentInitializer {
                 this.value = value;
             }
         }, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(BACKSLOT_SWITCH, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("backslot_switch");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("backslot_switch", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(GROUND_CHECKER, player -> new BooleanComponent() {
             private boolean value = false;
 

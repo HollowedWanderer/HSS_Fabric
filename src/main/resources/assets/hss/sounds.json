@@ -41,6 +41,12 @@
       "hss:thaumite_explosion"
     ]
   },
+  "sword_unsheath": {
+    "subtitle": "subtitles.hss.sword_unsheath",
+    "sounds": [
+      "hss:sword_unsheath"
+    ]
+  },
   "bye_bye_bye": {
     "sounds": [
       {

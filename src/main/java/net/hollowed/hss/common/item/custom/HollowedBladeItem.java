@@ -154,6 +154,7 @@ public class HollowedBladeItem extends SwordItem {
                 world.playSoundFromEntity(null, user, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5F, 0.5F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
             } else if (!world.isClient && user.isSneaking() && EnchantmentHelper.getLevel(HollowedsSwordsSorcery.FROZEN_GALE, stack) > 0) {
                 Vec3d lookDirection = user.getRotationVec(1.0f).normalize();
+                lookDirection.add(lookDirection.x * 1.1, 0, lookDirection.z * 1.1);
                 FGRingParticlePacket.send(user.getPos(), world, lookDirection);
                 DelayHandler.schedule(world, 5 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
                 DelayHandler.schedule(world, 10 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
@@ -273,9 +274,13 @@ public class HollowedBladeItem extends SwordItem {
                 Text text4 = Text.translatable("item.hss.greatsword.tooltip.shift.line4.maelstrom").formatted(Formatting.GRAY);
                 Text text5 = Text.translatable("item.hss.greatsword.tooltip.shift.line5").formatted(Formatting.GRAY);
 
-                Text textShift = Text.translatable("item.hss.greatsword.tooltip.shift.shift").formatted(Formatting.GOLD);
+                Text textCrouch = Text.translatable("item.hss.greatsword.tooltip.shift.crouch").formatted(Formatting.GOLD);
+                Text textUse = Text.translatable("item.hss.greatsword.tooltip.shift.use").formatted(Formatting.GOLD);
 
-                Text combinedText = text3a.copy().append(textShift).append(text3b);
+                Text textButtonLeft = Text.translatable("item.hss.greatsword.tooltip.shift.left").formatted(Formatting.GOLD);
+                Text textButtonRight = Text.translatable("item.hss.greatsword.tooltip.shift.right").formatted(Formatting.GOLD);
+
+                Text combinedText = text3a.copy().append(textButtonLeft).append(textCrouch).append(textUse).append(textButtonRight).append(text3b);
 
                 tooltip.add(text1);
                 tooltip.add(text2);

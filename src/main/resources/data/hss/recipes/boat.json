@@ -10,6 +10,6 @@
     "item": "minecraft:acacia_boat"
   },
   "template": {
-    "item": "minecraft:stone"
+    "item": "hss:stone"
   }
 }

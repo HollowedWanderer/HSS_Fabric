@@ -22,6 +22,9 @@
   "key.hss.movementAbility": "Charm Movement Ability",
 
   "item.hss.hollowed_blade": "The Hollowed Blade",
+  "item.hss.hollowed_wrench": "Hollowed Wrench",
+
+  "item.hss.ykwimio": "YKWIM(IO)",
   "item.hss.cryo_shard": "Cryo Shard",
   "item.hss.greatsword.tooltipa": "Hold ",
   "item.hss.greatsword.tooltip.shift": "[Shift]",
@@ -29,7 +32,7 @@
   "item.hss.greatsword.tooltip.shift.line1": "The blade of the Hollowed. The embodiment of the brittle cold.",
   "item.hss.greatsword.tooltip.shift.line2": "Made with the purest cryosteel, able to resist any amount of heat.",
   "item.hss.greatsword.tooltip.shift.line3a": "Hold and release ",
-  "item.hss.greatsword.tooltip.shift.shift": "[Shift + Right-click]",
+  "item.hss.greatsword.tooltip.shift.croun": "[Shift + Right-click]",
   "item.hss.greatsword.tooltip.shift.line3b": " to shatter the blade launching",
   "item.hss.greatsword.tooltip.shift.line4": "cryosteel shards in all directions. The blade will slowly",
   "item.hss.greatsword.tooltip.shift.line3b.maelstrom": " to shatter the blade spraying",

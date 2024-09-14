@@ -9,8 +9,12 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
+import net.minecraft.util.Util;
+
+import java.util.List;
 
 public class ModItems {
 
@@ -24,9 +28,30 @@ public class ModItems {
     public static final Item HOLLOWED_BLADE = registerItem("hollowed_blade",
             new HollowedBladeItem(ToolMaterials.NETHERITE, 2, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
 
+    public static final Item HOLLOWED_WRENCH = registerItem("hollowed_wrench",
+            new SwordItem(ToolMaterials.NETHERITE, 2, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.RARE)));
+
+
+    public static final Item YKWIMIO = registerItem("ykwimio",
+            new SwordItem(ToolMaterials.NETHERITE, 3, -2.6f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.UNCOMMON)));
+
     public static final Item VOLCANIC_VALOR = registerItem("volcanic_valor", new VolcanicValor(ToolMaterials.NETHERITE, 2, -2.4f, new Item.Settings().fireproof().maxCount(1).rarity(Rarity.UNCOMMON)));
 
     public static final Item CRYO_SHARD = registerItem("cryo_shard", new CryoShardItem(new Item.Settings()));
+
+    public static final Item NETHERONG_UPGRADE_SMITHING_TEMPLATE = registerItem("netherong_upgrade_smithing_template", SmithingTemplateItem.createNetheriteUpgrade());
+
+    public static final Item ENDERQUITE_UPGRADE_SMITHING_TEMPLATE = registerItem("enderquite_upgrade_smithing_template", new SmithingTemplateItem(
+            (Text.translatable(Util.createTranslationKey("item", new Identifier("smithing_template.enderquite_upgrade.applies_to")))),
+            (Text.translatable(Util.createTranslationKey("item", new Identifier("smithing_template.enderquite_upgrade.ingredients")))),
+            (Text.translatable(Util.createTranslationKey("upgrade", new Identifier("enderquite_upgrade")))),
+            (Text.translatable(Util.createTranslationKey("item", new Identifier("smithing_template.enderquite_upgrade.base_slot_description")))),
+            (Text.translatable(Util.createTranslationKey("item", new Identifier("smithing_template.enderquite_upgrade.additions_slot_description")))),
+            (List.of(new Identifier("item/empty_armor_slot_helmet"),
+                    new Identifier("item/empty_armor_slot_chestplate"),
+                    new Identifier("item/empty_armor_slot_leggings"),
+                    new Identifier("item/empty_armor_slot_boots"))),
+            (List.of(new Identifier("item/empty_slot_ingot")))));
 
     public static final Item FLAMING_PENDANT = registerItem("flaming_pendant",
             new FlamingPendantItem(new Item.Settings().maxCount(1), "fire",

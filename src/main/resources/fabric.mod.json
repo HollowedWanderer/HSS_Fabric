@@ -61,7 +61,8 @@
 			"hss:earth_bound",
 			"hss:air_bound",
 			"hss:arcane_bound",
-			"hss:shadow_bound"
+			"hss:shadow_bound",
+			"hss:backslot_switch"
 		]
 	}
 }

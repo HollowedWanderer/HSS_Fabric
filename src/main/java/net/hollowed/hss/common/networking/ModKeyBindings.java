@@ -10,6 +10,7 @@ public class ModKeyBindings {
     //Keybindings
     public static KeyBinding utilityMoveBinding;
     public static KeyBinding movementAbilityBinding;
+    public static KeyBinding backSlotBinding;
 
     public static void registerKeyBindings() {
         utilityMoveBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -22,6 +23,12 @@ public class ModKeyBindings {
                 "key.hss.movementAbility",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_X,
+                "category.hss.keybinds"
+        ));
+        backSlotBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.hss.backSlot",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_R,
                 "category.hss.keybinds"
         ));
     }

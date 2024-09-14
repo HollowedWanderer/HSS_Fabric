@@ -15,6 +15,8 @@ public class NetworkingConstants {
 
     public static final Identifier UTILITY_MOVE_PACKET_ID = new Identifier(MOD_ID, "utility_packet");
 
+    public static final Identifier BACKSLOT_PACKET_ID = new Identifier(MOD_ID, "backslot_packet");
+
     public static final Identifier GROUND_ATTACK_PACKET_ID = new Identifier(MOD_ID, "ground_packet");
 
     public static final Identifier HEAVY_GROUND_ATTACK_PACKET_ID = new Identifier(MOD_ID, "heavy_ground_packet");

@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
-    @ModifyVariable(method = "renderItem", at = @At(value = "HEAD"), argsOnly = true)
+    @ModifyVariable(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At(value = "HEAD"), argsOnly = true)
     public BakedModel useLargeModel(BakedModel value, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (stack.isOf(ModItems.HOLLOWED_BLADE) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.FIXED && renderMode != ModelTransformationMode.GROUND) {
+        if (stack.isOf(ModItems.HOLLOWED_BLADE) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND) {
             assert stack.getNbt() != null;
             if (!stack.getNbt().getBoolean("Shattered")) {
                 return ((ItemRendererAccessor) this).getModels().getModelManager().getModel(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand", "inventory"));
@@ -25,8 +25,14 @@ public abstract class ItemRendererMixin {
                 return ((ItemRendererAccessor) this).getModels().getModelManager().getModel(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand_shattered", "inventory"));
             }
         }
-        if (stack.isOf(ModItems.CRYO_SHARD) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.FIXED && renderMode != ModelTransformationMode.GROUND) {
+        if (stack.isOf(ModItems.CRYO_SHARD) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND) {
             return ((ItemRendererAccessor) this).getModels().getModelManager().getModel(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "cryo_shard_hand", "inventory"));
+        }
+        if (stack.isOf(ModItems.YKWIMIO) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND) {
+            return ((ItemRendererAccessor) this).getModels().getModelManager().getModel(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "katana_hand", "inventory"));
+        }
+        if (stack.isOf(ModItems.HOLLOWED_WRENCH) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND) {
+            return ((ItemRendererAccessor) this).getModels().getModelManager().getModel(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_wrench_hand", "inventory"));
         }
         return value;
     }

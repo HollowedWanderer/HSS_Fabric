@@ -1,6 +1,8 @@
 package net.hollowed.hss.common.client.renderers;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.hollowed.hss.HollowedsSwordsSorcery;
+import net.hollowed.hss.common.client.ModRenderTypeRegistry;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.joml.Vector3f;
@@ -12,6 +14,8 @@ import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken;
 
 import java.awt.*;
 
+import static team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry.NO_CULL;
+
 public class SquareRenderer {
 
     private static RenderTypeToken getRenderTypeToken() {
@@ -22,10 +26,10 @@ public class SquareRenderer {
         return RenderTypeToken.createToken(new Identifier(HollowedsSwordsSorcery.MOD_ID, "textures/vfx/white_mirror.png"));
     }
 
-    private static final LodestoneRenderType RENDER_LAYER = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(
-            getRenderTypeToken());
-    private static final LodestoneRenderType RENDER_LAYER2 = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyAndCache(
-            getRenderTypeToken2());
+
+    public static final LodestoneRenderType RENDER_LAYER = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyWithModifier(getRenderTypeToken(), b -> b.setCullState(NO_CULL));
+
+    public static final LodestoneRenderType RENDER_LAYER2 = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE.applyWithModifier(getRenderTypeToken2(), b -> b.setCullState(NO_CULL));
 
     public static void renderSquare(MatrixStack matrixStack, float x, float y, float z, float size) {
         VFXBuilders.WorldVFXBuilder builder = VFXBuilders.createWorld();

@@ -16,9 +16,12 @@ import net.hollowed.hss.common.entity.renderer.ItemProjectileEntityRenderer;
 import net.hollowed.hss.common.item.ModModelPredicateProvider;
 import net.hollowed.hss.common.networking.ModKeyBindings;
 import net.hollowed.hss.common.networking.RightClickHandler;
+import net.hollowed.hss.common.util.ModWorldEvents;
+import net.hollowed.hss.common.worldEvents.TestEventRenderer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.util.ModelIdentifier;
+import team.lodestar.lodestone.registry.client.LodestoneWorldEventRendererRegistry;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import static net.hollowed.hss.common.client.particles.ModParticles.*;
@@ -46,10 +49,14 @@ public class HollowedsSwordsSorceryClient implements ClientModInitializer {
 
         ModModelPredicateProvider.register();
 
+        LodestoneWorldEventRendererRegistry.registerRenderer(ModWorldEvents.TEST_EVENT, new TestEventRenderer());
+
         ModelLoadingPlugin.register((context) -> {
             context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand", "inventory"));
             context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_blade_hand_shattered", "inventory"));
             context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "cryo_shard_hand", "inventory"));
+            context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "katana_hand", "inventory"));
+            context.addModels(new ModelIdentifier(HollowedsSwordsSorcery.MOD_ID, "hollowed_wrench_hand", "inventory"));
         });
 
         ModKeyBindings.initialize();

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import net.hollowed.hss.HollowedsSwordsSorcery;
+import net.hollowed.hss.ModComponents;
 import net.hollowed.hss.common.entity.custom.FragileCryoShardEntity;
 import net.hollowed.hss.common.entity.custom.SpiralFragileCryoShardEntity;
 import net.hollowed.hss.common.networking.DelayHandler;
@@ -46,6 +47,8 @@ public class HollowedBladeItem extends SwordItem {
     private static final double REACH_AMOUNT = 0.75;
     private static final double DAMAGE_RADIUS = 1.5;
     private static final int DAMAGE_AMOUNT = 8;
+
+    private int dashTicks = 0;
 
     public HollowedBladeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
@@ -158,23 +161,19 @@ public class HollowedBladeItem extends SwordItem {
                 FGRingParticlePacket.send(user.getPos(), world, lookDirection);
                 DelayHandler.schedule(world, 5 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
                 DelayHandler.schedule(world, 10 , () -> FGRingParticlePacket.send(user.getPos(), world, lookDirection));
-                double dashSpeed = 2d;
-                user.addVelocity(lookDirection.x * dashSpeed, lookDirection.y * dashSpeed, lookDirection.z * dashSpeed);
-                user.velocityModified = true;
-                ((PlayerEntity) user).useRiptide(20);
+
+                dashTicks = 30;
+                ModComponents.FROZEN_GALING.get(user).setValue(true);
                 world.playSoundFromEntity(null, user, SoundEvents.ENTITY_PLAYER_HURT_FREEZE, SoundCategory.NEUTRAL, 0.5F, 1F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
                 world.playSoundFromEntity(null, user, SoundEvents.ITEM_TRIDENT_RIPTIDE_3, SoundCategory.NEUTRAL, 0.5F, 0.9F);
-                stack.getOrCreateNbt().putBoolean("Dashing", true);
                 stack.getOrCreateNbt().putBoolean("DashCheck", true);
-                DelayHandler.schedule(world, 15, () -> {
-                    stack.getOrCreateNbt().putBoolean("Dashing", false);
-                });
                 ((PlayerEntity) user).getItemCooldownManager().set(this, 80);
-                for (int i = 0; i < 7; i++) {
+                for (int i = 0; i < 11; i++) {
                     DelayHandler.schedule(world, i * 2, () -> {
                         CommandRunner.runCommandAsEntity(user, "particle minecraft:snowflake ~ ~ ~ 0 0 0 0.05 5 force");
                     });
                 }
+
             }
         }
     }
@@ -221,25 +220,48 @@ public class HollowedBladeItem extends SwordItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        if (dashTicks != 0) {
+            dashTicks--;
+        }
         assert entity instanceof PlayerEntity;
-        if (!((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem())) {
+        PlayerEntity player = (PlayerEntity) entity;
+
+        Vec3d lookDirection = player.getRotationVec(1.0f).normalize();
+
+        // Handle cooldown and dash check logic
+        if (!player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
             repair(stack, world);
         } else {
-            if (((PlayerEntity) entity).getItemCooldownManager().isCoolingDown(stack.getItem()) && ((PlayerEntity) entity).getMainHandStack() == stack) {
+            if (player.getItemCooldownManager().isCoolingDown(stack.getItem()) && player.getMainHandStack() == stack) {
                 assert stack.getNbt() != null;
                 if (!stack.getNbt().getBoolean("DashCheck") && stack.getNbt().getBoolean("Shattered")) {
-                    ((PlayerEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 1, 0, true, false));
+                    player.addStatusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 1, 0, true, false));
                 }
             }
         }
 
-        if (stack.hasNbt()) {
-            assert stack.getNbt() != null;
-            if (stack.getNbt().getBoolean("Dashing")) {
-                applyAreaDamage((PlayerEntity) entity, world);
-            }
+
+        if (dashTicks > 0) {
+            ModComponents.FROZEN_GALING.get(player).setValue(true);
+
+            // Set the dash speed
+            double dashSpeed = 1.6d;
+
+            // Reset current velocity and apply the new velocity in the look direction
+            player.setVelocity(lookDirection.x * dashSpeed, lookDirection.y * dashSpeed, lookDirection.z * dashSpeed);
+
+            // Mark velocity as modified to force movement updates
+            player.velocityModified = true;
+
+            // Apply area damage or any other effects
+            applyAreaDamage(player, world);
+
+            player.fallDistance = 0;
+        } else {
+            ModComponents.FROZEN_GALING.get(player).setValue(false);
         }
     }
+
 
     private void applyAreaDamage(PlayerEntity player, World world) {
         // Define the area around the player

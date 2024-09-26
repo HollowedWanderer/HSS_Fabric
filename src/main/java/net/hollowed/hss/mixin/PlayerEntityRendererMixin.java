@@ -1,5 +1,6 @@
 package net.hollowed.hss.mixin;
 
+import net.hollowed.hss.ModComponents;
 import net.hollowed.hss.common.item.custom.HollowedBladeItem;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -15,11 +16,17 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntityRenderer.class)
@@ -55,6 +62,11 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         } else {
             return abstractClientPlayerEntity.getSkinTexture();
         }
+    }
+
+    @Inject(method = "setupTransforms(Lnet/minecraft/client/network/AbstractClientPlayerEntity;Lnet/minecraft/client/util/math/MatrixStack;FFF)V", at = @At("HEAD"))
+    protected void setupTransforms(AbstractClientPlayerEntity player, MatrixStack matrixStack, float f, float g, float h, CallbackInfo ci) {
+
     }
 
     /**

@@ -48,6 +48,9 @@ public final class ModComponents implements EntityComponentInitializer {
     public static final ComponentKey<StringComponent> BOUND =
             ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "fire_bound")), StringComponent.class);
 
+    public static final ComponentKey<BooleanComponent> FROZEN_GALING =
+            ComponentRegistry.getOrCreate(Objects.requireNonNull(Identifier.of("hss", "frozen_galing")), BooleanComponent.class);
+
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerForPlayers(BOUND_INVENTORY, player -> new BooleanComponent() {
@@ -280,6 +283,29 @@ public final class ModComponents implements EntityComponentInitializer {
                 this.value = value;
             }
         }, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(FROZEN_GALING, player -> new BooleanComponent() {
+            private boolean value = false;
+
+            @Override
+            public void readFromNbt(@NotNull NbtCompound tag) {
+                value = tag.getBoolean("frozen_galing");
+            }
+
+            @Override
+            public void writeToNbt(@NotNull NbtCompound tag) {
+                tag.putBoolean("frozen_galing", value);
+            }
+
+            @Override
+            public boolean getValue() {
+                return value;
+            }
+
+            @Override
+            public void setValue(boolean value) {
+                this.value = value;
+            }
+        }, RespawnCopyStrategy.NEVER_COPY);
         registry.registerForPlayers(BOUND, player -> new StringComponent() {
             private String value = "";
 

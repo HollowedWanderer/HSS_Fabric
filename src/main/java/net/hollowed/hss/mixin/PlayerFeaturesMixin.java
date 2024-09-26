@@ -3,11 +3,13 @@ package net.hollowed.hss.mixin;
 import net.hollowed.hss.common.EntitiesClient;
 import net.hollowed.hss.common.client.renderers.BackSlotFeatureRenderer;
 import net.hollowed.hss.common.client.renderers.ChilledFeatureRenderer;
+import net.hollowed.hss.common.client.renderers.FrozenGaleFeatureRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.feature.TridentRiptideFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,5 +30,7 @@ public abstract class PlayerFeaturesMixin extends LivingEntityRenderer<AbstractC
 
         this.addFeature(new ChilledFeatureRenderer(this, ctx.getModelLoader().getModelPart(EntitiesClient.CHILLED_LAYER)));
         this.addFeature(new BackSlotFeatureRenderer(this, heldItemRenderer));
+        this.addFeature(new FrozenGaleFeatureRenderer<>(this, ctx.getModelLoader()));
+
     }
 }

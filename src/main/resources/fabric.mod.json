@@ -62,7 +62,8 @@
 			"hss:air_bound",
 			"hss:arcane_bound",
 			"hss:shadow_bound",
-			"hss:backslot_switch"
+			"hss:backslot_switch",
+			"hss:frozen_galing"
 		]
 	}
 }

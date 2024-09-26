@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 
 import static net.hollowed.hss.common.networking.NetworkingConstants.ALTAR_CHARGE_PACKET_ID;
 
-public class AltarChargeParticlePacket {
-    public static void send(Vec3d position, World world) {
+public class ParticlePacket {
+    public static void send(Vec3d position, World world, int loopCount) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeDouble(position.x);
         buf.writeDouble(position.y);

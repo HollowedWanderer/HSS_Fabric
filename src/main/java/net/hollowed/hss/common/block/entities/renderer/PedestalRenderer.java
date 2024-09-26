@@ -27,17 +27,35 @@ public class PedestalRenderer implements BlockEntityRenderer<PedestalBlockEntity
     public void render(PedestalBlockEntity pedestalBlockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         ItemStack heldItem = pedestalBlockEntity.getStack(0);
 
+        MinecraftClient client = MinecraftClient.getInstance();
+
         // Only proceed with rendering if the item stack is not empty
         if (!heldItem.isEmpty()) {
             PlayerEntity player = MinecraftClient.getInstance().player;
             if (player != null) {
                 World world = player.getWorld();
-                float bob = (float) (Math.sin((world.getTime() + tickDelta) * 0.1f) * 0.0875f);
-                float rotation = (world.getTime() + tickDelta) * 2; // Smoother rotation using tickDelta
+                long worldTime = world.getTime(); // Get the current world time
+
+                // Linear interpolation for smoother bobbing and rotation
+                float previousRotation = (worldTime - 1) * 2; // Previous frame's rotation
+                float currentRotation = worldTime * 2;        // Current frame's rotation
+                float rotation = lerp(client.getTickDelta(), previousRotation, currentRotation);
+
+                float previousBob = (float) (Math.sin((worldTime - 1) * 0.1f) * 0.0875f); // Previous frame's bob
+                float currentBob = (float) (Math.sin(worldTime * 0.1f) * 0.0875f);        // Current frame's bob
+                float bob = lerp(client.getTickDelta(), previousBob, currentBob);
+
+                // Render the item with smooth rotation and bobbing
                 renderItem(heldItem, ITEM_POS.add(0, bob, 0), rotation, matrices, vertexConsumers, light, overlay, world);
             }
         }
     }
+
+    // Linear interpolation method (lerp)
+    private float lerp(float delta, float start, float end) {
+        return start + delta * (end - start);
+    }
+
 
     private void renderItem(ItemStack itemStack, Vec3d offset, float yRot, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, World world) {
         matrices.push();
